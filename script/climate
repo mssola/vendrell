@@ -76,4 +76,4 @@ if ($cover =~ /coverage:\s?(.+)%/) {
 }
 
 # Fmt tool
-print `gofmt -tabs=false -tabwidth=4 -l=true -e=true -d=true .`;
+print `gofmt -l=true -e=true -d=true .`;

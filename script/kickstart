@@ -14,6 +14,7 @@ fi
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
 cd $dir
 go get -d -v ./...
+go get -u code.google.com/p/go.tools/cmd/cover
 
 # PostgreSQL
 base="vendrell"
