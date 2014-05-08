@@ -10,11 +10,7 @@ import (
 )
 
 func TestPassword(t *testing.T) {
-	salt := PasswordSalt("")
-	if salt != "" {
-		t.Errorf("Should be an empty string!")
-	}
-	salt = PasswordSalt("1234")
+	salt := PasswordSalt("1234")
 	if salt == "" {
 		t.Errorf("Empty string!")
 	}
