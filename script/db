@@ -1,0 +1,80 @@
+#!/usr/bin/perl -w
+# Copyright (C) 2014 Miquel Sabaté Solà
+# This file is licensed under the MIT license.
+# See the LICENSE file.
+
+# This script allows us to connect with psql properly for the specified
+# environment. By default it will assume the development environment but
+# this behavior can be changed by passing the -e flag. Moreover, instead
+# of showing the prompt, you can just migrate the stuff from the
+# db/migrate/directory. Therefore, this command has the following usage:
+#
+#   $ perl db [-e name] [-m | --migrate]
+
+use strict;
+use File::Basename;
+use Cwd 'abs_path';
+
+
+# Show the usage string and exit.
+sub usage {
+    print "Usage: db [-e name] [-m | --migrate]\n";
+    print "  -e  Specify an environment.\n";
+    print "  -m  Migrate all the files from the db/migrate directory.\n";
+    exit(1);
+}
+
+# Parsing options.
+my %opts = ('e', 'development', 'm', 0);
+for (my $it = 0; $it < @ARGV; $it++) {
+    if ($ARGV[$it] eq '-e') {
+        usage() if (!$ARGV[$it + 1]);
+        $opts{e} = $ARGV[$it + 1];
+        $it++;
+    } elsif ($ARGV[$it] eq '-m' || $ARGV[$it] eq '--migrate') {
+        $opts{m} = 1;
+    } else {
+        print "Unknown option `$ARGV[$it]'\n\n";
+        usage();
+    }
+}
+
+# Let's fetch the configuration of the environment.
+my $base = abs_path(dirname(dirname($0)));
+my $config = "$base/db/database.json";
+if (!-f $config) {
+    print "ERROR: the $config file does not exist!";
+    exit(1)
+}
+
+open(FILE, $config);
+my $file = '';
+while (<FILE>) {
+    my $line = $_;
+    chomp($line);
+    $file .= " $line";
+}
+close(FILE);
+
+# Fetch the values.
+$file =~ m/"$opts{e}":\s?({(.*?)})/;
+my $contents = $1;
+if (!defined($contents)) {
+    print "The `$opts{e}' environment does not exist.\n";
+    exit(1);
+}
+
+# Connect to PostgreSQL.
+my %ary = ();
+$ary{$1} = $2 while ($contents =~ /"(\w+)":\s?"([\w|-]+)"/g);
+my $cmd = "PGPASSWORD=$ary{'password'} psql -d $ary{'dbname'} -U $ary{'user'}";
+if ($opts{m}) {
+    opendir(DIR, "$base/db/migrate/") or die $!;
+    while (my $file = readdir(DIR)) {
+        next if ($file =~ m/^\./);
+        system("$cmd < $base/db/migrate/$file\n");
+    }
+    closedir(DIR);
+} else {
+    system($cmd);
+}

@@ -1,0 +1,29 @@
+#!/bin/bash
+# Copyright (C) 2014 Miquel Sabaté Solà
+# This file is licensed under the MIT license.
+# See the LICENSE file.
+
+
+# Force root privileges.
+if [[ $EUID -ne 0 ]]; then
+    echo "ERROR: Must be run with root privileges."
+    exit 1
+fi
+
+# Check which command to use.
+cmd="start"
+if [ "$1" != "" ]; then
+    cmd="$1"
+fi
+
+# systemd-specific stuff.
+if [ -f "/etc/arch-release" ]; then
+    # Check that systemd is in the system.
+    ps -e | grep systemd > /dev/null
+    if [ $? -ne 0 ]; then
+        echo -e "\033[31msystemd is not running!\033[0m"
+    fi
+
+    # Raising the daemons.
+    systemctl $cmd postgresql
+fi

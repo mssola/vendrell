@@ -1,0 +1,21 @@
+{
+    "development": {
+        "user": "postgres",
+        "dbname": "vendrell-development",
+        "password": "",
+        "sslmode": "disable"
+    },
+    "production": {
+        "user": "postgres",
+        "dbname": "vendrell-production",
+        "password": "",
+        "sslmode": "disable"
+    },
+    "test": {
+        "user": "postgres",
+        "dbname": "vendrell-test",
+        "password": "",
+        "sslmode": "disable"
+    }
+}
+
