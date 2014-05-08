@@ -8,6 +8,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"io/ioutil"
+	"strings"
 
 	"github.com/coopernurse/gorp"
 	_ "github.com/lib/pq"
@@ -40,7 +41,7 @@ func DBConfig(file string) string {
 		}
 		i++
 	}
-	return cfg
+	return strings.TrimSpace(cfg)
 }
 
 // Public: initializes the global Db variable.
