@@ -26,10 +26,15 @@ func main() {
 		Extensions: []string{".tpl"},
 	}))
 	store := sessions.NewCookieStore([]byte(lib.NewAuthToken()))
+	store.Options(sessions.Options{
+		MaxAge: 60 * 60 * 24 * 30 * 12,
+	})
 	m.Use(sessions.Sessions("vendrell", store))
 
 	// Database.
 	db := lib.InitDB("database.json")
+	db.AddTableWithName(app.User{}, "user")
+	db.AddTableWithName(app.Player{}, "players")
 	m.Map(db)
 	defer db.Db.Close()
 
@@ -39,11 +44,10 @@ func main() {
 	r.Post("/login", app.Login)
 	r.Post("/logout", app.Logout)
 	r.Group("/players", func(r martini.Router) {
-		r.Get("/new", app.PlayersNew)
-		r.Post("/", app.PlayersCreate)
+		r.Post("", app.PlayersCreate)
 		r.Get("/:id", app.PlayersShow)
-		r.Put("/:id", app.PlayersUpdate)
-		r.Delete("/:id", app.PlayersDelete)
+		r.Post("/:id", app.PlayersUpdate)
+		r.Post("/:id/delete", app.PlayersDelete)
 	})
 	m.Action(r.Handle)
 
