@@ -16,3 +16,11 @@ create table players (
     name varchar(255) unique not null,
     created_at timestamp
 );
+
+create table ratings (
+    id serial primary key,
+    value int not null,
+    player_id uuid references players(id) on delete cascade,
+    created_at timestamp
+);
+

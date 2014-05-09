@@ -27,7 +27,7 @@ func main() {
 	}))
 	store := sessions.NewCookieStore([]byte(lib.NewAuthToken()))
 	store.Options(sessions.Options{
-		MaxAge: 60 * 60 * 24 * 30 * 12,
+		MaxAge: 60 * 60 * 24 * 30 * 12, // A year.
 	})
 	m.Use(sessions.Sessions("vendrell", store))
 
@@ -48,6 +48,7 @@ func main() {
 		r.Get("/:id", app.PlayersShow)
 		r.Post("/:id", app.UserLogged, app.PlayersUpdate)
 		r.Post("/:id/delete", app.UserLogged, app.PlayersDelete)
+		r.Post("/:id/rate", app.PlayersRate)
 	})
 	m.Action(r.Handle)
 

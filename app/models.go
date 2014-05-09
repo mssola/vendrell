@@ -21,3 +21,9 @@ type Player struct {
 	Name       string
 	Created_at time.Time
 }
+
+type Rating struct {
+	Id         int
+	Value      int
+	Created_at time.Time
+}

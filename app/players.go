@@ -54,3 +54,7 @@ func PlayersDelete(res http.ResponseWriter, req *http.Request, params martini.Pa
 	db.Exec("delete from players where id=$1", params["id"])
 	http.Redirect(res, req, "/", http.StatusFound)
 }
+
+func PlayersRate() {
+	// TODO
+}
