@@ -15,3 +15,9 @@ type User struct {
 	Password_hash string
 	Created_at    time.Time
 }
+
+type Player struct {
+	Id         string
+	Name       string
+	Created_at time.Time
+}

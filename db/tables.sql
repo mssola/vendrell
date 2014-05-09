@@ -10,3 +10,9 @@ create table users (
     password_hash text,
     created_at timestamp
 );
+
+create table players (
+    id uuid primary key,
+    name varchar(255) unique not null,
+    created_at timestamp
+);
