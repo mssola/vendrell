@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Entrenaments</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Entrenaments</title>
 </head>
 <body>
-{{ yield }}
+  {{ yield }}
 </body>
 </html>
