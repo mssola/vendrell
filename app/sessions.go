@@ -12,6 +12,23 @@ import (
 	"github.com/mssola/leaky/lib"
 )
 
+func IsUserLogged(id interface{}, db gorp.DbMap) bool {
+	if id == nil {
+		return false
+	}
+
+	var u User
+	e := db.SelectOne(&u, "select * from users where id=$1", id.(string))
+	return e == nil
+}
+
+func UserLogged(res http.ResponseWriter, req *http.Request, s sessions.Session, db gorp.DbMap) {
+	id := s.Get("userId")
+	if !IsUserLogged(id, db) {
+		http.Redirect(res, req, "/", http.StatusFound)
+	}
+}
+
 func Login(res http.ResponseWriter, req *http.Request, db gorp.DbMap, s sessions.Session) {
 	var u User
 

@@ -42,12 +42,12 @@ func main() {
 	r := martini.NewRouter()
 	r.Get("/", app.RootIndex)
 	r.Post("/login", app.Login)
-	r.Post("/logout", app.Logout)
+	r.Post("/logout", app.UserLogged, app.Logout)
 	r.Group("/players", func(r martini.Router) {
-		r.Post("", app.PlayersCreate)
+		r.Post("", app.UserLogged, app.PlayersCreate)
 		r.Get("/:id", app.PlayersShow)
-		r.Post("/:id", app.PlayersUpdate)
-		r.Post("/:id/delete", app.PlayersDelete)
+		r.Post("/:id", app.UserLogged, app.PlayersUpdate)
+		r.Post("/:id/delete", app.UserLogged, app.PlayersDelete)
 	})
 	m.Action(r.Handle)
 
