@@ -1,1 +1,1 @@
-web: vendrell
+web: webapp
