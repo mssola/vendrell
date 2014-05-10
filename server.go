@@ -35,6 +35,7 @@ func main() {
 	db := lib.InitDB("database.json")
 	db.AddTableWithName(app.User{}, "user")
 	db.AddTableWithName(app.Player{}, "players")
+	db.AddTableWithName(app.Rating{}, "ratings").SetKeys(true, "Id")
 	m.Map(db)
 	defer db.Db.Close()
 

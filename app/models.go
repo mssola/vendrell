@@ -25,5 +25,6 @@ type Player struct {
 type Rating struct {
 	Id         int
 	Value      int
+	Player_id  string
 	Created_at time.Time
 }
