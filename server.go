@@ -33,7 +33,7 @@ func main() {
 
 	// Database.
 	db := lib.InitDB("database.json")
-	db.AddTableWithName(app.User{}, "user")
+	db.AddTableWithName(app.User{}, "users")
 	db.AddTableWithName(app.Player{}, "players")
 	db.AddTableWithName(app.Rating{}, "ratings").SetKeys(true, "Id")
 	m.Map(db)
@@ -44,6 +44,7 @@ func main() {
 	r.Get("/", app.RootIndex)
 	r.Post("/login", app.Login)
 	r.Post("/logout", app.UserLogged, app.Logout)
+	r.Post("/users", app.UsersCreate)
 	r.Group("/players", func(r martini.Router) {
 		r.Post("", app.UserLogged, app.PlayersCreate)
 		r.Get("/:id", app.PlayersShow)

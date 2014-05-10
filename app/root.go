@@ -5,14 +5,20 @@
 package app
 
 import (
+	"github.com/coopernurse/gorp"
 	"github.com/martini-contrib/render"
 	"github.com/martini-contrib/sessions"
 )
 
-func RootIndex(r render.Render, s sessions.Session) {
+func RootIndex(db gorp.DbMap, r render.Render, s sessions.Session) {
 	id := s.Get("userId")
 	if id == nil {
-		r.HTML(200, "root/index", "mssola")
+		count, err := db.SelectInt("select count(*) from users")
+		if err == nil && count == 0 {
+			r.HTML(200, "users/new", "mssola")
+		} else {
+			r.HTML(200, "root/index", "mssola")
+		}
 	} else {
 		r.HTML(200, "root/home", "mssola")
 	}
