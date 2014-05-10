@@ -9,7 +9,7 @@ import (
 
 	"github.com/coopernurse/gorp"
 	"github.com/martini-contrib/sessions"
-	"github.com/mssola/leaky/lib"
+	"github.com/mssola/vendrell/lib"
 )
 
 func IsUserLogged(id interface{}, db gorp.DbMap) bool {
