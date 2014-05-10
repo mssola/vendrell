@@ -1,0 +1,59 @@
+{
+	"ImportPath": "github.com/mssola/vendrell",
+	"GoVersion": "devel +209bb94bd691 Fri May 09 09:38:29 2014 +0900",
+	"Deps": [
+		{
+			"ImportPath": "code.google.com/p/go.crypto/bcrypt",
+			"Comment": "null-185",
+			"Rev": "6478cc9340cbbe6c04511280c5007722269108e9"
+		},
+		{
+			"ImportPath": "code.google.com/p/go.crypto/blowfish",
+			"Comment": "null-185",
+			"Rev": "6478cc9340cbbe6c04511280c5007722269108e9"
+		},
+		{
+			"ImportPath": "github.com/codegangsta/inject",
+			"Comment": "v1.0-rc1",
+			"Rev": "37d7f8432a3e684eef9b2edece76bdfa6ac85b39"
+		},
+		{
+			"ImportPath": "github.com/coopernurse/gorp",
+			"Comment": "v1.5",
+			"Rev": "242be3eec6e4d545d0eca24b5dc71236b71ac656"
+		},
+		{
+			"ImportPath": "github.com/go-martini/martini",
+			"Comment": "v1.0-rc1-20-g68f1310",
+			"Rev": "68f131047aa0c227aa36e6d95164f76fee5e3fe5"
+		},
+		{
+			"ImportPath": "github.com/gorilla/context",
+			"Rev": "a08edd30ad9e104612741163dc087a613829a23c"
+		},
+		{
+			"ImportPath": "github.com/gorilla/securecookie",
+			"Rev": "972f32923fd3555b7f0ea39acdc4e3d4d5412ee8"
+		},
+		{
+			"ImportPath": "github.com/gorilla/sessions",
+			"Rev": "c9bf01c18818f7738e6b2670f1fd92f710ecb734"
+		},
+		{
+			"ImportPath": "github.com/lib/pq",
+			"Rev": "fda846c284b1b2935e5f977da866408de90e2a10"
+		},
+		{
+			"ImportPath": "github.com/martini-contrib/render",
+			"Rev": "151749ee4940202e80cc4f066107ced4259b9eef"
+		},
+		{
+			"ImportPath": "github.com/martini-contrib/sessions",
+			"Rev": "5fb70e24200d12981048814d5f1732a59671fae4"
+		},
+		{
+			"ImportPath": "github.com/nu7hatch/gouuid",
+			"Rev": "179d4d0c4d8d407a32af483c2354df1d2c91e6c3"
+		}
+	]
+}
