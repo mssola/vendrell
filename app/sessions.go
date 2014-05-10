@@ -36,7 +36,7 @@ func Login(res http.ResponseWriter, req *http.Request, db gorp.DbMap, s sessions
 	n, password := req.FormValue("name"), req.FormValue("password")
 	e := db.SelectOne(&u, "select * from users where name=$1", n)
 	if e != nil || !lib.PasswordMatch(u.Password_hash, password) {
-		http.Redirect(res, req, "/", http.StatusNotFound)
+		http.Redirect(res, req, "/", http.StatusFound)
 		return
 	}
 
