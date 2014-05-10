@@ -8,6 +8,9 @@ import (
 	"database/sql"
 	"encoding/json"
 	"io/ioutil"
+	"log"
+	"os"
+	"regexp"
 	"strings"
 
 	"github.com/coopernurse/gorp"
@@ -44,13 +47,39 @@ func DBConfig(file string) string {
 	return strings.TrimSpace(cfg)
 }
 
+// Returns a config URL for PostgreSQL when using Heroku.
+func herokuUrl(env string) string {
+	// Black magic to get the PostgreSQL config.
+	rg := "(?i)^postgres://(?:([^:@]+):([^@]*)@)?([^@/:]+):(\\d+)/(.*)$"
+	regex := regexp.MustCompile(rg)
+	matches := regex.FindStringSubmatch(os.Getenv("DATABASE_URL"))
+	if matches == nil {
+		log.Fatalf("Wrong URL format!")
+	}
+
+	// And now we can build a proper url for PostgreSQL.
+	fmt := "user=%s password=%s host=%s port=%s dbname=%s sslmode=%s"
+	spec := fmt.Sprintf(fmt, matches[1], matches[2], matches[3], matches[4],
+		matches[5], "disable")
+	return spec
+}
+
 // Public: initializes the global Db variable.
 //
 // file - The name of the JSON file describing the database configuration.
 //
 // Returns a new DB instance.
 func InitDB(file string) gorp.DbMap {
-	d, err := sql.Open("postgres", DBConfig(file))
+	// First of all get the URL (depends whether it's on Heroku or not).
+	url := ""
+	if h := os.Getenv("DATABASE_URL"); h != "" {
+		url = herokuUrl(h)
+	} else {
+		url = DBConfig(file)
+	}
+
+	// Connect and return the connection.
+	d, err := sql.Open("postgres", url)
 	if err != nil {
 		panic(err)
 	}
