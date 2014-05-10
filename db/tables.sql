@@ -6,7 +6,6 @@
 create table users (
     id uuid primary key,
     name varchar(255) unique not null,
-    auth_token varchar(255) unique,
     password_hash text,
     created_at timestamp
 );

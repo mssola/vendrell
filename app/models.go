@@ -11,7 +11,6 @@ import (
 type User struct {
 	Id            string
 	Name          string
-	Auth_token    string
 	Password_hash string
 	Created_at    time.Time
 }
