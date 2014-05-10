@@ -7,6 +7,7 @@ package lib
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -58,8 +59,8 @@ func herokuUrl(env string) string {
 	}
 
 	// And now we can build a proper url for PostgreSQL.
-	fmt := "user=%s password=%s host=%s port=%s dbname=%s sslmode=%s"
-	spec := fmt.Sprintf(fmt, matches[1], matches[2], matches[3], matches[4],
+	s := "user=%s password=%s host=%s port=%s dbname=%s sslmode=%s"
+	spec := fmt.Sprintf(s, matches[1], matches[2], matches[3], matches[4],
 		matches[5], "disable")
 	return spec
 }
