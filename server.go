@@ -50,6 +50,7 @@ func main() {
 		r.Post("/:id", app.UserLogged, app.PlayersUpdate)
 		r.Post("/:id/delete", app.UserLogged, app.PlayersDelete)
 		r.Post("/:id/rate", app.PlayersRate)
+		r.Get("/:id/rate", app.PlayersRated)
 	})
 	m.Action(r.Handle)
 

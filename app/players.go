@@ -6,6 +6,7 @@ package app
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -89,17 +90,34 @@ func PlayersRate(res http.ResponseWriter, req *http.Request,
 	// Get the rating.
 	rating, err := fetchRating(req.FormValue("rating"))
 	if err != nil {
-		http.Redirect(res, req, "/", http.StatusFound)
+		url := fmt.Sprintf("/players/%v/rate?error=true", params["id"])
+		http.Redirect(res, req, url, http.StatusFound)
 		return
 	}
 
-	// Insert the new rating and redirect the user.
+	// Insert the new rating.
 	r := &Rating{
 		Value:      rating,
 		Player_id:  params["id"],
 		Created_at: time.Now(),
 	}
-	db.Insert(r)
-	// TODO: redirect to a proper page.
-	http.Redirect(res, req, "/", http.StatusFound)
+	e := db.Insert(r)
+
+	// Redirect.
+	url := fmt.Sprintf("/players/%v/rate", params["id"])
+	if e != nil {
+		url += "?error=true"
+	}
+	http.Redirect(res, req, url, http.StatusFound)
+}
+
+func PlayersRated(res http.ResponseWriter, req *http.Request,
+	params martini.Params, r render.Render) {
+
+	p := make(map[string]string)
+	if req.FormValue("error") == "true" {
+		p["id"] = params["id"]
+		p["error"] = "true"
+	}
+	r.HTML(200, "players/rated", p)
 }

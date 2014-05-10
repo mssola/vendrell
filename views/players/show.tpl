@@ -13,7 +13,7 @@
 {{else}}
 
 <form action="/players/{{.id}}/rate" method="POST" autocomplete="off" accept-charset="utf-8">
-    <input type="text" name="rating" autofocus placeholder="Puntuació" />
+    <input type="number" name="rating" autofocus placeholder="Puntuació" />
     <input type="submit" value="Puntuar" />
 </form>
 
