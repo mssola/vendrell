@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/coopernurse/gorp"
-	"github.com/mssola/vendrell/lib"
+	"github.com/mssola/go-utils/security"
 	"github.com/nu7hatch/gouuid"
 )
 
@@ -30,7 +30,7 @@ func UsersCreate(res http.ResponseWriter, req *http.Request, db gorp.DbMap) {
 	u := &User{
 		Id:            uuid.String(),
 		Name:          req.FormValue("name"),
-		Password_hash: lib.PasswordSalt(req.FormValue("password")),
+		Password_hash: security.PasswordSalt(req.FormValue("password")),
 		Created_at:    time.Now(),
 	}
 	db.Insert(u)

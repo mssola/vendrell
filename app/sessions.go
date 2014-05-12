@@ -9,7 +9,7 @@ import (
 
 	"github.com/coopernurse/gorp"
 	"github.com/martini-contrib/sessions"
-	"github.com/mssola/vendrell/lib"
+	"github.com/mssola/go-utils/security"
 )
 
 func IsUserLogged(id interface{}, db gorp.DbMap) bool {
@@ -35,7 +35,7 @@ func Login(res http.ResponseWriter, req *http.Request, db gorp.DbMap, s sessions
 	// Check if the user exists and that the password is spot on.
 	n, password := req.FormValue("name"), req.FormValue("password")
 	e := db.SelectOne(&u, "select * from users where name=$1", n)
-	if e != nil || !lib.PasswordMatch(u.Password_hash, password) {
+	if e != nil || !security.PasswordMatch(u.Password_hash, password) {
 		http.Redirect(res, req, "/", http.StatusFound)
 		return
 	}
