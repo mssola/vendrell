@@ -52,6 +52,22 @@
 			"Rev": "5fb70e24200d12981048814d5f1732a59671fae4"
 		},
 		{
+			"ImportPath": "github.com/mssola/go-utils/db",
+			"Rev": "031a53d25b7d9b35057e2d63138d667e7ef9fb83"
+		},
+		{
+			"ImportPath": "github.com/mssola/go-utils/misc",
+			"Rev": "031a53d25b7d9b35057e2d63138d667e7ef9fb83"
+		},
+		{
+			"ImportPath": "github.com/mssola/go-utils/path",
+			"Rev": "031a53d25b7d9b35057e2d63138d667e7ef9fb83"
+		},
+		{
+			"ImportPath": "github.com/mssola/go-utils/security",
+			"Rev": "031a53d25b7d9b35057e2d63138d667e7ef9fb83"
+		},
+		{
 			"ImportPath": "github.com/nu7hatch/gouuid",
 			"Rev": "179d4d0c4d8d407a32af483c2354df1d2c91e6c3"
 		}
