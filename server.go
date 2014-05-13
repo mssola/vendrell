@@ -25,6 +25,7 @@ func main() {
 	// Let there be middleware.
 	m.Use(martini.Logger())
 	m.Use(martini.Recovery())
+	m.Use(martini.Static("public"))
 	m.Use(render.Renderer(render.Options{
 		Layout:     "application/layout",
 		Directory:  "views",

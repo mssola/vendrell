@@ -1,0 +1,32 @@
+
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    /* TODO: not sure about this. */
+    font-family: Flux-Regular,SourceSansProRegular,Arial,sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+    background-color: #f9f9f9;
+}
+
+#header {
+    background-color: #2d618c;
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(30%,#3776ab),color-stop(95%,#2d618c));
+    background-image: -webkit-linear-gradient(#3776ab 30%,#2d618c 95%);
+    background-image: -moz-linear-gradient(#3776ab 30%,#2d618c 95%);
+    background-image: -o-linear-gradient(#3776ab 30%,#2d618c 95%);
+    background-image: linear-gradient(#3776ab 30%,#2d618c 95%);
+    border-bottom: 1px solid #18334b;
+    /*color: #91959c;*/
+    padding: 17px 15px 5px;
+    height: 20px
+}

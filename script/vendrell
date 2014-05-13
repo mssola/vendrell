@@ -3,13 +3,6 @@
 # This file is licensed under the MIT license.
 # See the LICENSE file.
 
-
-# Force root privileges.
-if [[ $EUID -ne 0 ]]; then
-    echo "ERROR: Must be run with root privileges."
-    exit 1
-fi
-
 # Check which command to use.
 cmd="start"
 if [ "$1" != "" ]; then
@@ -25,5 +18,5 @@ if [ -f "/etc/arch-release" ]; then
     fi
 
     # Raising the daemons.
-    systemctl $cmd postgresql
+    sudo systemctl $cmd postgresql
 fi

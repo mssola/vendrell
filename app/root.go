@@ -10,16 +10,22 @@ import (
 	"github.com/martini-contrib/sessions"
 )
 
+type Options struct {
+	LoggedIn bool
+}
+
 func RootIndex(db gorp.DbMap, r render.Render, s sessions.Session) {
 	id := s.Get("userId")
 	if id == nil {
+		o := &Options{LoggedIn: false}
 		count, err := db.SelectInt("select count(*) from users")
 		if err == nil && count == 0 {
-			r.HTML(200, "users/new", "mssola")
+			r.HTML(200, "users/new", o)
 		} else {
-			r.HTML(200, "root/index", "mssola")
+			r.HTML(200, "root/index", o)
 		}
 	} else {
-		r.HTML(200, "root/home", "mssola")
+		o := &Options{LoggedIn: true}
+		r.HTML(200, "root/home", o)
 	}
 }
