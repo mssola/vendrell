@@ -59,6 +59,7 @@ func main() {
 	r.Post("/logout", app.UserLogged, app.Logout)
 	r.Post("/users", app.UsersCreate)
 	r.Group("/players", func(r martini.Router) {
+		r.Get("/new", app.PlayersNew)
 		r.Post("", app.UserLogged, app.PlayersCreate)
 		r.Get("/:id", app.PlayersShow)
 		r.Post("/:id", app.UserLogged, app.PlayersUpdate)

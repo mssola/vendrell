@@ -18,6 +18,11 @@ import (
 	"github.com/nu7hatch/gouuid"
 )
 
+func PlayersNew(r render.Render) {
+	o := &Options{LoggedIn: true}
+	r.HTML(200, "players/new", o)
+}
+
 func PlayersCreate(res http.ResponseWriter, req *http.Request, db gorp.DbMap) {
 	// Get a ne uuid.
 	id, err := uuid.NewV4()

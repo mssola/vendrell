@@ -7,12 +7,23 @@
 </head>
 <body>
     {{if .LoggedIn}}
-    <div id="header">
-    </div>
+    <header>
+      <div class="wrapper">
+        <div class="right">
+          <a href="/">Inici</a>
+          <a href="/players/new">Crear jugador</a>
+          <form id="logout" action="/logout" method="POST">
+              <input class="yellow-btn" type="submit" value="Surt" />
+          </form>
+        </div>
+      </div>
+    </header>
     {{end}}
 
-    <div class="main">
+    <div id="content">
+      <div class="wrapper">
         {{ yield }}
+      </div>
     </div>
 </body>
 </html>
