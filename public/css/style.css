@@ -153,11 +153,12 @@ header a:hover {
     width: 100%;
     margin: 0;
     box-sizing: border-box;
+    margin-bottom: 5px;
 }
 
 .dialog .yellow-btn {
     float: right;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .dialog .clearout {
