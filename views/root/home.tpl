@@ -1,3 +1,5 @@
 
-<span>To do</span>
+{{range .Players}}
+    <a href="/players/{{.Id}}">{{.Name}}</a>
+{{end}}
 

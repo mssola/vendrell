@@ -18,6 +18,24 @@ type Options struct {
 	Error    bool
 }
 
+type Home struct {
+	Players  []Player
+	LoggedIn bool
+}
+
+func homePage(db gorp.DbMap, r render.Render, s sessions.Session) {
+	var players []Player
+	o := &Home{LoggedIn: true}
+
+	_, err := db.Select(&players, "select * from players order by name")
+	if err != nil {
+		// TODO
+		return
+	}
+	o.Players = players
+	r.HTML(200, "root/home", o)
+}
+
 func RootIndex(db gorp.DbMap, r render.Render, s sessions.Session) {
 	id := s.Get("userId")
 	if id == nil {
@@ -29,7 +47,6 @@ func RootIndex(db gorp.DbMap, r render.Render, s sessions.Session) {
 			r.HTML(200, "root/index", o)
 		}
 	} else {
-		o := &Options{LoggedIn: true}
-		r.HTML(200, "root/home", o)
+		homePage(db, r, s)
 	}
 }
