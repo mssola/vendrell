@@ -25,6 +25,9 @@
     </div>
     <div class="dialog-body dialog-body-text">
         <span>Gràcies per puntuar aquest entrenament!</span>
+        <br />
+        <br />
+        <span>Pots tornar a la teva pàgina <a href="/players/{{.Id}}">aquí</a>.</span>
     </div>
 </div>
 
