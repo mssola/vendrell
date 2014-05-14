@@ -156,6 +156,10 @@ header a:hover {
     margin-bottom: 5px;
 }
 
+.dialog .text:hover {
+    border-color: #a0a0a0 #b9b9b9 #b9b9b9 #b9b9b9!important;
+}
+
 .dialog .yellow-btn {
     float: right;
     margin-top: 5px;
@@ -163,5 +167,22 @@ header a:hover {
 
 .dialog .clearout {
     clear: both;
+}
+
+.dialog .dialog-body-text {
+    padding-bottom: 20px;
+}
+
+.dialog .dialog-body-text a {
+    color: #1F1FE0;
+    text-decoration: none;
+}
+
+.dialog .dialog-body-text a:hover {
+    text-decoration: underline;
+}
+
+.dialog .dialog-body a:visited {
+    color: #1F1FE0
 }
 

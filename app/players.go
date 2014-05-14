@@ -54,12 +54,15 @@ func PlayersShow(res http.ResponseWriter, req *http.Request, r render.Render,
 	}
 
 	// Prepare parameters and generate the HTML code.
-	tpl := map[string]string{"id": p.Id, "name": p.Name}
+	o := &Options{
+		Id:   p.Id,
+		Name: p.Name,
+	}
 	id := s.Get("userId")
 	if IsUserLogged(id, db) {
-		tpl["logged"] = "true"
+		o.LoggedIn = true
 	}
-	r.HTML(200, "players/show", tpl)
+	r.HTML(200, "players/show", o)
 }
 
 func PlayersUpdate(res http.ResponseWriter, req *http.Request,

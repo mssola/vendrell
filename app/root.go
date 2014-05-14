@@ -10,7 +10,10 @@ import (
 	"github.com/martini-contrib/sessions"
 )
 
+// TODO: move this to another place.
 type Options struct {
+	Id       string
+	Name     string
 	LoggedIn bool
 }
 
