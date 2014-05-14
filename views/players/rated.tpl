@@ -1,5 +1,5 @@
 
-{{if .error}}
+{{if .Error}}
 
 <div class="dialog">
     <div class="dialog-header">
@@ -13,7 +13,7 @@
         <br />
         <br />
 
-        <span>Pots tornar a provar de puntuar <a href="/players/{{.id}}">aquí</a>.</span>
+        <span>Pots tornar a provar de puntuar <a href="/players/{{.Id}}">aquí</a>.</span>
     </div>
 </div>
 

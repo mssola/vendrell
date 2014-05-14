@@ -122,10 +122,10 @@ func PlayersRate(res http.ResponseWriter, req *http.Request,
 func PlayersRated(res http.ResponseWriter, req *http.Request,
 	params martini.Params, r render.Render) {
 
-	p := make(map[string]string)
+	p := &Options{}
 	if req.FormValue("error") == "true" {
-		p["id"] = params["id"]
-		p["error"] = "true"
+		p.Id = params["id"]
+		p.Error = true
 	}
 	r.HTML(200, "players/rated", p)
 }

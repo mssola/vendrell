@@ -15,6 +15,7 @@ type Options struct {
 	Id       string
 	Name     string
 	LoggedIn bool
+	Error    bool
 }
 
 func RootIndex(db gorp.DbMap, r render.Render, s sessions.Session) {
