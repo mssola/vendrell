@@ -4,6 +4,9 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <title>Entrenaments</title>
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    {{if .JS}}
+    <script src="/js/vendrell.js"></script>
+    {{end}}
 </head>
 <body>
     {{if .LoggedIn}}

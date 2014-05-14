@@ -61,6 +61,7 @@ func PlayersShow(res http.ResponseWriter, req *http.Request, r render.Render,
 	id := s.Get("userId")
 	if IsUserLogged(id, db) {
 		o.LoggedIn = true
+		o.JS = true
 	}
 	r.HTML(200, "players/show", o)
 }

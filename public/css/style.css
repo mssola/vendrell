@@ -124,6 +124,18 @@ header a:hover {
     border: 1px solid #cd504a;
 }
 
+.red-btn:disabled {
+    color: #cb7f7f;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.9);
+    background-color: #efefef;
+    background-image: -moz-linear-gradient(#fefefe, #efefef);
+    background-image: -webkit-linear-gradient(#fefefe, #efefef);
+    background-image: linear-gradient(#fefefe, #efefef);
+    background-repeat: repeat-x;
+    border-color: #e1e1e1;
+    cursor: default;
+}
+
 .dialog {
     width: 400px;
     margin: 60px auto;
@@ -209,5 +221,13 @@ header a:hover {
 
 .dialog .dialog-body a:visited {
     color: #1F1FE0
+}
+
+#right {
+    float: right;
+}
+
+#right .dialog {
+    width: 300px;
 }
 

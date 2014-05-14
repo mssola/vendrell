@@ -16,11 +16,13 @@ type Options struct {
 	Name     string
 	LoggedIn bool
 	Error    bool
+	JS       bool
 }
 
 type Home struct {
 	Players  []Player
 	LoggedIn bool
+	JS       bool
 }
 
 func homePage(db gorp.DbMap, r render.Render, s sessions.Session) {
