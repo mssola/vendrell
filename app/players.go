@@ -76,7 +76,8 @@ func PlayersUpdate(res http.ResponseWriter, req *http.Request,
 func PlayersDelete(res http.ResponseWriter, req *http.Request,
 	params martini.Params, db gorp.DbMap) {
 
-	db.Exec("delete from players where id=$1", params["id"])
+	db.Exec("delete from players where id=$1 and name=$2",
+		params["id"], req.FormValue("name"))
 	http.Redirect(res, req, "/", http.StatusFound)
 }
 
