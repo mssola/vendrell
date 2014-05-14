@@ -13,7 +13,7 @@
           <a href="/">Inici</a>
           <a href="/players/new">Crear jugador</a>
           <form id="logout" action="/logout" method="POST">
-              <input class="yellow-btn" type="submit" value="Surt" />
+              <input class="btn yellow-btn" type="submit" value="Surt" />
           </form>
         </div>
       </div>

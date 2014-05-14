@@ -6,7 +6,7 @@
         </div>
         <div class="dialog-body">
             <input class="text" type="text" name="name" autofocus placeholder="Nom" />
-            <input class="yellow-btn" type="submit" value="Crear" />
+            <input class="btn yellow-btn" type="submit" value="Crear" />
             <div class="clearout"></div>
         </div>
     </form>
