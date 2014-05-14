@@ -22,6 +22,22 @@ h1 {
     font-size: 16px;
 }
 
+a, a:hover, a:active, a:focus {
+    /* Don't let Firefox's stupid outline dots to appear */
+    outline: 0;
+    cursor: pointer;
+}
+
+button::-moz-focus-inner {
+    /* Don't let Firefox's stupid outline dots to appear */
+    border: 0;
+}
+
+input::-moz-focus-inner {
+    /* Don't let Firefox's stupid outline dots to appear */
+    border: 0;
+}
+
 header {
     background-color: #2d618c;
     background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(30%,#3776ab),color-stop(95%,#2d618c));
@@ -42,8 +58,14 @@ header {
 }
 
 header .right {
-    text-align: right;
-    padding: 8px 30px;
+    float: right;
+}
+
+header .inner {
+    height: 48px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
 }
 
 header a {
@@ -54,7 +76,6 @@ header a {
     font-size: 100%;
     vertical-align: baseline;
     font-weight: bold;
-    cursor: auto;
     display: inline-block;
     margin-right: 25px;
 }

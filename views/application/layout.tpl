@@ -13,11 +13,13 @@
     <header>
       <div class="wrapper">
         <div class="right">
-          <a href="/">Inici</a>
-          <a href="/players/new">Crear jugador</a>
-          <form id="logout" action="/logout" method="POST">
-              <input class="btn yellow-btn" type="submit" value="Surt" />
-          </form>
+          <div class="inner">
+            <a href="/">Inici</a>
+            <a href="/players/new">Crear jugador</a>
+            <form id="logout" action="/logout" method="POST">
+                <input class="btn yellow-btn" type="submit" value="Surt" />
+            </form>
+          </div>
         </div>
       </div>
     </header>
