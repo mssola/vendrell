@@ -260,12 +260,12 @@ header a:hover {
     font-weight: bold;
 }
 
-#left table {
+table {
     border-collapse: collapse;
     margin: 50px auto;
 }
 
-#left table th {
+table th {
     position: relative;
     padding: 8px 20px;
     margin: 0;
@@ -282,7 +282,7 @@ header a:hover {
     border: 1px solid #586873;
 }
 
-#left table td {
+table td {
     border: 1px solid #A7ADB1;
     padding: 8px 20px;
 }
