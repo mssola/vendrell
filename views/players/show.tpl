@@ -2,6 +2,9 @@
 {{if .LoggedIn}}
 
 <div id="left">
+
+{{if .Stats.Ratings}}
+
     <table>
         <tr>
             <th>Mínim</th>
@@ -29,6 +32,13 @@
             </tr>
         {{end}}
     </table>
+
+{{else}}
+
+<span class="empty">Aquest jugador encara no ha valorat cap entrenament.</span>
+
+{{end}}
+
 </div>
 
 <div id="right">

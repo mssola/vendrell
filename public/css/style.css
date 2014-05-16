@@ -252,6 +252,14 @@ header a:hover {
     text-align: center;
 }
 
+#left .empty {
+    margin: 10px 0px;
+    text-align: center;
+    color: #615B5B;
+    font-size: 12px;
+    font-weight: bold;
+}
+
 #left table {
     border-collapse: collapse;
     margin: 50px auto;
