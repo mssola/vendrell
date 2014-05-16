@@ -53,7 +53,9 @@ header {
 }
 
 .wrapper {
+    display: table;
     max-width: 1000px;
+    width: 1000px;
     margin: 0 auto;
 }
 
@@ -244,11 +246,44 @@ header a:hover {
     color: #1F1FE0
 }
 
+#left {
+    width: 60%;
+    display: table-cell;
+    text-align: center;
+}
+
+#left table {
+    border-collapse: collapse;
+    margin: 50px auto;
+}
+
+#left table th {
+    position: relative;
+    padding: 8px 20px;
+    margin: 0;
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+    background-color: #2d618c;
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(30%,#3776ab),color-stop(95%,#2d618c));
+    background-image: -webkit-linear-gradient(#3776ab 30%,#2d618c 95%);
+    background-image: -moz-linear-gradient(#3776ab 30%,#2d618c 95%);
+    background-image: -o-linear-gradient(#3776ab 30%,#2d618c 95%);
+    background-image: linear-gradient(#3776ab 30%,#2d618c 95%);
+    border-bottom: 1px solid #18334b;
+    background-repeat: repeat-x;
+    border: 1px solid #586873;
+}
+
+#left table td {
+    border: 1px solid #A7ADB1;
+    padding: 8px 20px;
+}
+
 #right {
-    float: right;
+    width: 40%;
+    display: table-cell;
 }
 
 #right .dialog {
     width: 300px;
 }
-
