@@ -41,6 +41,35 @@ func PlayersCreate(res http.ResponseWriter, req *http.Request, db gorp.DbMap) {
 	http.Redirect(res, req, "/", http.StatusFound)
 }
 
+type Statistics struct {
+	Ratings []Rating
+	Min     int
+	Max     int
+	Avg     float64
+}
+
+// TODO
+func getStats(id string, db gorp.DbMap) (*Statistics, error) {
+	s := &Statistics{}
+
+	query := "select * from ratings where player_id=$1"
+	if _, e := db.Select(&s.Ratings, query, id); e != nil {
+		return nil, e
+	}
+
+	count := 0.0
+	for _, v := range s.Ratings {
+		if v.Value < s.Min {
+			s.Min = v.Value
+		} else if v.Value > s.Max {
+			s.Max = v.Value
+		}
+		count += float64(v.Value)
+	}
+	s.Avg = count / float64(len(s.Ratings))
+	return s, nil
+}
+
 func PlayersShow(res http.ResponseWriter, req *http.Request, r render.Render,
 	params martini.Params, db gorp.DbMap, s sessions.Session) {
 
@@ -60,6 +89,11 @@ func PlayersShow(res http.ResponseWriter, req *http.Request, r render.Render,
 	}
 	id := s.Get("userId")
 	if IsUserLogged(id, db) {
+		o.Stats, e = getStats(p.Id, db)
+		if e != nil {
+			http.Redirect(res, req, "/", http.StatusFound)
+			return
+		}
 		o.LoggedIn = true
 		o.JS = true
 	}

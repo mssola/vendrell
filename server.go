@@ -30,6 +30,7 @@ func main() {
 		Layout:     "application/layout",
 		Directory:  "views",
 		Extensions: []string{".tpl"},
+		Funcs:      app.ViewHelpers(),
 	}))
 	store := sessions.NewCookieStore([]byte(security.NewAuthToken()))
 	store.Options(sessions.Options{

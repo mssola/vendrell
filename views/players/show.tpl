@@ -1,6 +1,36 @@
 
 {{if .LoggedIn}}
 
+<div id="left">
+    <table>
+        <tr>
+            <th>Mínim</th>
+            <th>Màxim</th>
+            <th>Mitjana</th>
+        </tr>
+        <tr>
+            <td>{{.Stats.Min}}</td>
+            <td>{{.Stats.Max}}</td>
+            <td>{{.Stats.Avg}}</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th>Entrenament</th>
+            <th>Puntuació</th>
+            <th>Data</th>
+        </tr>
+        {{range $idx, $rating := .Stats.Ratings}}
+            <tr>
+                <td>{{inc $idx}}</td>
+                <td>{{$rating.Value}}</td>
+                <td>{{fmtDate $rating.Created_at}}</td>
+            </tr>
+        {{end}}
+    </table>
+</div>
+
 <div id="right">
     <div class="dialog">
         <div class="dialog-header">

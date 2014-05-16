@@ -10,21 +10,6 @@ import (
 	"github.com/martini-contrib/sessions"
 )
 
-// TODO: move this to another place.
-type Options struct {
-	Id       string
-	Name     string
-	LoggedIn bool
-	Error    bool
-	JS       bool
-}
-
-type Home struct {
-	Players  []Player
-	LoggedIn bool
-	JS       bool
-}
-
 func homePage(db gorp.DbMap, r render.Render, s sessions.Session) {
 	var players []Player
 	o := &Home{LoggedIn: true}
