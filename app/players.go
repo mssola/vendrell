@@ -70,9 +70,14 @@ func getStats(id string, db gorp.DbMap) (*Statistics, error) {
 	return s, nil
 }
 
-func PlayersShow(res http.ResponseWriter, req *http.Request, r render.Render,
-	params martini.Params, db gorp.DbMap, s sessions.Session) {
-
+func PlayersShow(
+	res http.ResponseWriter,
+	req *http.Request,
+	r render.Render,
+	params martini.Params,
+	db gorp.DbMap,
+	s sessions.Session,
+) {
 	var p Player
 
 	// Get the user to be shown.
@@ -100,17 +105,23 @@ func PlayersShow(res http.ResponseWriter, req *http.Request, r render.Render,
 	r.HTML(200, "players/show", o)
 }
 
-func PlayersUpdate(res http.ResponseWriter, req *http.Request,
-	params martini.Params, db gorp.DbMap) {
-
+func PlayersUpdate(
+	res http.ResponseWriter,
+	req *http.Request,
+	params martini.Params,
+	db gorp.DbMap,
+) {
 	query := "update players set name=$1 where id=$2"
 	db.Exec(query, req.FormValue("name"), params["id"])
 	http.Redirect(res, req, "/", http.StatusFound)
 }
 
-func PlayersDelete(res http.ResponseWriter, req *http.Request,
-	params martini.Params, db gorp.DbMap) {
-
+func PlayersDelete(
+	res http.ResponseWriter,
+	req *http.Request,
+	params martini.Params,
+	db gorp.DbMap,
+) {
 	db.Exec("delete from players where id=$1 and name=$2",
 		params["id"], req.FormValue("name"))
 	http.Redirect(res, req, "/", http.StatusFound)
@@ -128,9 +139,13 @@ func fetchRating(rating string) (int, error) {
 	return 0, errors.New("Invalid rating!")
 }
 
-func PlayersRate(res http.ResponseWriter, req *http.Request,
-	params martini.Params, db gorp.DbMap, s sessions.Session) {
-
+func PlayersRate(
+	res http.ResponseWriter,
+	req *http.Request,
+	params martini.Params,
+	db gorp.DbMap,
+	s sessions.Session,
+) {
 	// Get the rating.
 	rating, err := fetchRating(req.FormValue("rating"))
 	if err != nil {
@@ -155,9 +170,12 @@ func PlayersRate(res http.ResponseWriter, req *http.Request,
 	http.Redirect(res, req, url, http.StatusFound)
 }
 
-func PlayersRated(res http.ResponseWriter, req *http.Request,
-	params martini.Params, r render.Render) {
-
+func PlayersRated(
+	res http.ResponseWriter,
+	req *http.Request,
+	params martini.Params,
+	r render.Render,
+) {
 	p := &Options{Id: params["id"]}
 	if req.FormValue("error") == "true" {
 		p.Error = true

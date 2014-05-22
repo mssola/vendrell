@@ -22,14 +22,24 @@ func IsUserLogged(id interface{}, db gorp.DbMap) bool {
 	return e == nil
 }
 
-func UserLogged(res http.ResponseWriter, req *http.Request, s sessions.Session, db gorp.DbMap) {
+func UserLogged(
+	res http.ResponseWriter,
+	req *http.Request,
+	s sessions.Session,
+	db gorp.DbMap,
+) {
 	id := s.Get("userId")
 	if !IsUserLogged(id, db) {
 		http.Redirect(res, req, "/", http.StatusFound)
 	}
 }
 
-func Login(res http.ResponseWriter, req *http.Request, db gorp.DbMap, s sessions.Session) {
+func Login(
+	res http.ResponseWriter,
+	req *http.Request,
+	db gorp.DbMap,
+	s sessions.Session,
+) {
 	var u User
 
 	// Check if the user exists and that the password is spot on.
