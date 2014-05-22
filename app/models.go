@@ -21,6 +21,17 @@ type Player struct {
 	Created_at time.Time
 }
 
+// TODO
+type ExtendedPlayer struct {
+	Id         string
+	Name       string
+	Min        int
+	Max        int
+	Avg        float64
+	Values     []string
+	Created_at time.Time
+}
+
 type Rating struct {
 	Id         int
 	Value      int

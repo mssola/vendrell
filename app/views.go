@@ -21,6 +21,13 @@ type Options struct {
 	Stats    *Statistics
 }
 
+type ExtendedHome struct {
+	Players  []*ExtendedPlayer
+	Values   []int
+	LoggedIn bool
+	JS       bool
+}
+
 type Home struct {
 	Players  []Player
 	LoggedIn bool

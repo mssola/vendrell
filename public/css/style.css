@@ -285,6 +285,7 @@ table th {
 table td {
     border: 1px solid #A7ADB1;
     padding: 8px 20px;
+    text-align: center;
 }
 
 #right {
