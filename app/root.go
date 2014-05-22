@@ -5,6 +5,7 @@
 package app
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/coopernurse/gorp"
@@ -46,7 +47,7 @@ func homePage(db gorp.DbMap, r render.Render, s sessions.Session) {
 				Name:   name,
 				Min:    min,
 				Max:    max,
-				Avg:    avg,
+				Avg:    fmt.Sprintf("%.2f", avg),
 				Values: vls,
 			}
 			players = append(players, p)

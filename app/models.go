@@ -27,7 +27,7 @@ type ExtendedPlayer struct {
 	Name       string
 	Min        int
 	Max        int
-	Avg        float64
+	Avg        string
 	Values     []string
 	Created_at time.Time
 }

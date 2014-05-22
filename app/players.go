@@ -45,7 +45,7 @@ type Statistics struct {
 	Ratings []Rating
 	Min     int
 	Max     int
-	Avg     float64
+	Avg     string
 }
 
 // TODO
@@ -66,7 +66,8 @@ func getStats(id string, db gorp.DbMap) (*Statistics, error) {
 		}
 		count += float64(v.Value)
 	}
-	s.Avg = count / float64(len(s.Ratings))
+	avg := count / float64(len(s.Ratings))
+	s.Avg = fmt.Sprintf("%0.2f", avg)
 	return s, nil
 }
 

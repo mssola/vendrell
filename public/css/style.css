@@ -260,6 +260,15 @@ header a:hover {
     font-weight: bold;
 }
 
+.force-container {
+    overflow-x: auto;
+    max-width: 1400px;
+}
+
+.force-container th {
+    padding: 8px 5px;
+}
+
 table {
     border-collapse: collapse;
     margin: 50px auto;
