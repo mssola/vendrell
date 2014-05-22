@@ -288,6 +288,15 @@ table td {
     text-align: center;
 }
 
+table td a {
+    color: #181899;
+    text-decoration: none;
+}
+
+table td a:hover {
+    text-decoration: underline;
+}
+
 #right {
     width: 40%;
     display: table-cell;
