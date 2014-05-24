@@ -13,7 +13,6 @@ import (
 
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
-	"github.com/martini-contrib/sessions"
 	"github.com/nu7hatch/gouuid"
 )
 
@@ -75,7 +74,6 @@ func PlayersShow(
 	req *http.Request,
 	r render.Render,
 	params martini.Params,
-	s sessions.Session,
 ) {
 	var p Player
 
@@ -91,7 +89,8 @@ func PlayersShow(
 		Id:   p.Id,
 		Name: p.Name,
 	}
-	id := s.Get("userId")
+	s, _ := store.Get(req, sessionName)
+	id := s.Values["userId"]
 	if IsUserLogged(id) {
 		o.Stats, e = getStats(p.Id)
 		if e != nil {
@@ -140,7 +139,6 @@ func PlayersRate(
 	res http.ResponseWriter,
 	req *http.Request,
 	params martini.Params,
-	s sessions.Session,
 ) {
 	// Get the rating.
 	rating, err := fetchRating(req.FormValue("rating"))

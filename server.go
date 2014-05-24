@@ -8,8 +8,6 @@ import (
 	"github.com/go-martini/martini"
 	_ "github.com/lib/pq"
 	"github.com/martini-contrib/render"
-	"github.com/martini-contrib/sessions"
-	"github.com/mssola/go-utils/security"
 	"github.com/mssola/vendrell/app"
 )
 
@@ -19,26 +17,28 @@ func main() {
 	m := martini.New()
 
 	// Let there be middleware.
+	// TODO: can be replaced with negroni.
 	m.Use(martini.Logger())
 	m.Use(martini.Recovery())
 	m.Use(martini.Static("public"))
+
+	// TODO: what can I do here ? :/
 	m.Use(render.Renderer(render.Options{
 		Layout:     "application/layout",
 		Directory:  "views",
 		Extensions: []string{".tpl"},
 		Funcs:      app.ViewHelpers(),
 	}))
-	store := sessions.NewCookieStore([]byte(security.NewAuthToken()))
-	store.Options(sessions.Options{
-		MaxAge: 60 * 60 * 24 * 30 * 12, // A year.
-	})
-	m.Use(sessions.Sessions("vendrell", store))
+
+	// Sessions.
+	app.InitSession()
 
 	// Database.
 	app.InitDB()
 	defer app.CloseDB()
 
 	// Routing.
+	// TODO: replace with Gorilla's mux package.
 	r := martini.NewRouter()
 	r.Get("/", app.RootIndex)
 	r.Post("/login", app.Login)

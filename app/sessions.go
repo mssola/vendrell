@@ -7,9 +7,21 @@ package app
 import (
 	"net/http"
 
-	"github.com/martini-contrib/sessions"
+	"github.com/gorilla/sessions"
 	"github.com/mssola/go-utils/security"
 )
+
+var store *sessions.CookieStore
+
+const sessionName = "vendrell"
+
+func InitSession() {
+	store = sessions.NewCookieStore([]byte(security.NewAuthToken()))
+	store.Options = &sessions.Options{
+		Path:   "/",
+		MaxAge: 60 * 60 * 24 * 30 * 12, // A year.
+	}
+}
 
 func IsUserLogged(id interface{}) bool {
 	if id == nil {
@@ -21,22 +33,15 @@ func IsUserLogged(id interface{}) bool {
 	return e == nil
 }
 
-func UserLogged(
-	res http.ResponseWriter,
-	req *http.Request,
-	s sessions.Session,
-) {
-	id := s.Get("userId")
-	if !IsUserLogged(id) {
+func UserLogged(res http.ResponseWriter, req *http.Request) {
+	s, _ := store.Get(req, sessionName)
+
+	if !IsUserLogged(s.Values["userId"]) {
 		http.Redirect(res, req, "/", http.StatusFound)
 	}
 }
 
-func Login(
-	res http.ResponseWriter,
-	req *http.Request,
-	s sessions.Session,
-) {
+func Login(res http.ResponseWriter, req *http.Request) {
 	var u User
 
 	// Check if the user exists and that the password is spot on.
@@ -48,11 +53,16 @@ func Login(
 	}
 
 	// It's ok to login this user.
-	s.Set("userId", u.Id)
+	s, _ := store.Get(req, sessionName)
+	s.Values["userId"] = u.Id
+	s.Save(req, res)
 	http.Redirect(res, req, "/", http.StatusFound)
 }
 
-func Logout(res http.ResponseWriter, req *http.Request, s sessions.Session) {
-	s.Delete("userId")
+func Logout(res http.ResponseWriter, req *http.Request) {
+	s, _ := store.Get(req, sessionName)
+	delete(s.Values, "userId")
+	s.Save(req, res)
+
 	http.Redirect(res, req, "/", http.StatusFound)
 }
