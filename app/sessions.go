@@ -7,18 +7,17 @@ package app
 import (
 	"net/http"
 
-	"github.com/coopernurse/gorp"
 	"github.com/martini-contrib/sessions"
 	"github.com/mssola/go-utils/security"
 )
 
-func IsUserLogged(id interface{}, db gorp.DbMap) bool {
+func IsUserLogged(id interface{}) bool {
 	if id == nil {
 		return false
 	}
 
 	var u User
-	e := db.SelectOne(&u, "select * from users where id=$1", id.(string))
+	e := Db.SelectOne(&u, "select * from users where id=$1", id.(string))
 	return e == nil
 }
 
@@ -26,10 +25,9 @@ func UserLogged(
 	res http.ResponseWriter,
 	req *http.Request,
 	s sessions.Session,
-	db gorp.DbMap,
 ) {
 	id := s.Get("userId")
-	if !IsUserLogged(id, db) {
+	if !IsUserLogged(id) {
 		http.Redirect(res, req, "/", http.StatusFound)
 	}
 }
@@ -37,14 +35,13 @@ func UserLogged(
 func Login(
 	res http.ResponseWriter,
 	req *http.Request,
-	db gorp.DbMap,
 	s sessions.Session,
 ) {
 	var u User
 
 	// Check if the user exists and that the password is spot on.
 	n, password := req.FormValue("name"), req.FormValue("password")
-	e := db.SelectOne(&u, "select * from users where name=$1", n)
+	e := Db.SelectOne(&u, "select * from users where name=$1", n)
 	if e != nil || !security.PasswordMatch(u.Password_hash, password) {
 		http.Redirect(res, req, "/", http.StatusFound)
 		return

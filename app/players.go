@@ -11,7 +11,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/coopernurse/gorp"
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
 	"github.com/martini-contrib/sessions"
@@ -23,7 +22,7 @@ func PlayersNew(r render.Render) {
 	r.HTML(200, "players/new", o)
 }
 
-func PlayersCreate(res http.ResponseWriter, req *http.Request, db gorp.DbMap) {
+func PlayersCreate(res http.ResponseWriter, req *http.Request) {
 	// Get a ne uuid.
 	id, err := uuid.NewV4()
 	if err != nil {
@@ -37,7 +36,7 @@ func PlayersCreate(res http.ResponseWriter, req *http.Request, db gorp.DbMap) {
 		Name:       req.FormValue("name"),
 		Created_at: time.Now(),
 	}
-	db.Insert(p)
+	Db.Insert(p)
 	http.Redirect(res, req, "/", http.StatusFound)
 }
 
@@ -49,11 +48,11 @@ type Statistics struct {
 }
 
 // TODO
-func getStats(id string, db gorp.DbMap) (*Statistics, error) {
+func getStats(id string) (*Statistics, error) {
 	s := &Statistics{}
 
 	query := "select * from ratings where player_id=$1"
-	if _, e := db.Select(&s.Ratings, query, id); e != nil {
+	if _, e := Db.Select(&s.Ratings, query, id); e != nil {
 		return nil, e
 	}
 
@@ -76,13 +75,12 @@ func PlayersShow(
 	req *http.Request,
 	r render.Render,
 	params martini.Params,
-	db gorp.DbMap,
 	s sessions.Session,
 ) {
 	var p Player
 
 	// Get the user to be shown.
-	e := db.SelectOne(&p, "select * from players where id=$1", params["id"])
+	e := Db.SelectOne(&p, "select * from players where id=$1", params["id"])
 	if e != nil {
 		http.Redirect(res, req, "/", http.StatusFound)
 		return
@@ -94,8 +92,8 @@ func PlayersShow(
 		Name: p.Name,
 	}
 	id := s.Get("userId")
-	if IsUserLogged(id, db) {
-		o.Stats, e = getStats(p.Id, db)
+	if IsUserLogged(id) {
+		o.Stats, e = getStats(p.Id)
 		if e != nil {
 			http.Redirect(res, req, "/", http.StatusFound)
 			return
@@ -110,10 +108,9 @@ func PlayersUpdate(
 	res http.ResponseWriter,
 	req *http.Request,
 	params martini.Params,
-	db gorp.DbMap,
 ) {
 	query := "update players set name=$1 where id=$2"
-	db.Exec(query, req.FormValue("name"), params["id"])
+	Db.Exec(query, req.FormValue("name"), params["id"])
 	http.Redirect(res, req, "/", http.StatusFound)
 }
 
@@ -121,9 +118,8 @@ func PlayersDelete(
 	res http.ResponseWriter,
 	req *http.Request,
 	params martini.Params,
-	db gorp.DbMap,
 ) {
-	db.Exec("delete from players where id=$1 and name=$2",
+	Db.Exec("delete from players where id=$1 and name=$2",
 		params["id"], req.FormValue("name"))
 	http.Redirect(res, req, "/", http.StatusFound)
 }
@@ -144,7 +140,6 @@ func PlayersRate(
 	res http.ResponseWriter,
 	req *http.Request,
 	params martini.Params,
-	db gorp.DbMap,
 	s sessions.Session,
 ) {
 	// Get the rating.
@@ -161,7 +156,7 @@ func PlayersRate(
 		Player_id:  params["id"],
 		Created_at: time.Now(),
 	}
-	e := db.Insert(r)
+	e := Db.Insert(r)
 
 	// Redirect.
 	url := fmt.Sprintf("/players/%v/rate", params["id"])

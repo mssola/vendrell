@@ -8,14 +8,13 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/coopernurse/gorp"
 	"github.com/mssola/go-utils/security"
 	"github.com/nu7hatch/gouuid"
 )
 
-func UsersCreate(res http.ResponseWriter, req *http.Request, db gorp.DbMap) {
+func UsersCreate(res http.ResponseWriter, req *http.Request) {
 	// Only one user is allowed in this application.
-	count, err := db.SelectInt("select count(*) from users")
+	count, err := Db.SelectInt("select count(*) from users")
 	if err != nil || count > 0 {
 		http.Redirect(res, req, "/", http.StatusFound)
 		return
@@ -33,6 +32,6 @@ func UsersCreate(res http.ResponseWriter, req *http.Request, db gorp.DbMap) {
 		Password_hash: security.PasswordSalt(req.FormValue("password")),
 		Created_at:    time.Now(),
 	}
-	db.Insert(u)
+	Db.Insert(u)
 	http.Redirect(res, req, "/", http.StatusFound)
 }

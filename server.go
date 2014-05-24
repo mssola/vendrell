@@ -5,14 +5,10 @@
 package main
 
 import (
-	"github.com/coopernurse/gorp"
 	"github.com/go-martini/martini"
 	_ "github.com/lib/pq"
 	"github.com/martini-contrib/render"
 	"github.com/martini-contrib/sessions"
-	"github.com/mssola/go-utils/db"
-	"github.com/mssola/go-utils/misc"
-	"github.com/mssola/go-utils/path"
 	"github.com/mssola/go-utils/security"
 	"github.com/mssola/vendrell/app"
 )
@@ -39,19 +35,8 @@ func main() {
 	m.Use(sessions.Sessions("vendrell", store))
 
 	// Database.
-	c := db.Open(db.Options{
-		Base:        path.FindRoot("vendrell", "."),
-		Relative:    "/db/database.json",
-		Environment: misc.EnvOrElse("VENDRELL_ENV", "development"),
-		DBMS:        "postgres",
-		Heroku:      true,
-	})
-	d := gorp.DbMap{Db: c, Dialect: gorp.PostgresDialect{}}
-	d.AddTableWithName(app.User{}, "users")
-	d.AddTableWithName(app.Player{}, "players")
-	d.AddTableWithName(app.Rating{}, "ratings").SetKeys(true, "Id")
-	m.Map(d)
-	defer d.Db.Close()
+	app.InitDB()
+	defer app.CloseDB()
 
 	// Routing.
 	r := martini.NewRouter()

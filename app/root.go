@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/coopernurse/gorp"
 	"github.com/martini-contrib/render"
 	"github.com/martini-contrib/sessions"
 )
@@ -19,7 +18,7 @@ func parseAgg(agg string) []string {
 	return strings.Split(clean, ",")
 }
 
-func homePage(db gorp.DbMap, r render.Render, s sessions.Session) {
+func homePage(r render.Render, s sessions.Session) {
 	players := []*ExtendedPlayer{}
 	o := &ExtendedHome{LoggedIn: true}
 
@@ -29,7 +28,7 @@ func homePage(db gorp.DbMap, r render.Render, s sessions.Session) {
 	q += " from players p, ratings r where r.player_id = p.id"
 	q += " group by p.id, p.name"
 
-	rows, _ := db.Db.Query(q)
+	rows, _ := Db.Db.Query(q)
 	rmax := 0
 	for rows.Next() {
 		var id, name, values, dates string
@@ -59,17 +58,17 @@ func homePage(db gorp.DbMap, r render.Render, s sessions.Session) {
 	r.HTML(200, "root/home", o)
 }
 
-func RootIndex(db gorp.DbMap, r render.Render, s sessions.Session) {
+func RootIndex(r render.Render, s sessions.Session) {
 	id := s.Get("userId")
 	if id == nil {
 		o := &Options{LoggedIn: false}
-		count, err := db.SelectInt("select count(*) from users")
+		count, err := Db.SelectInt("select count(*) from users")
 		if err == nil && count == 0 {
 			r.HTML(200, "users/new", o)
 		} else {
 			r.HTML(200, "root/index", o)
 		}
 	} else {
-		homePage(db, r, s)
+		homePage(r, s)
 	}
 }
