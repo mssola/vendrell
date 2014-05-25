@@ -8,8 +8,6 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-
-	"github.com/martini-contrib/render"
 )
 
 func parseAgg(agg string) []string {
@@ -18,7 +16,7 @@ func parseAgg(agg string) []string {
 	return strings.Split(clean, ",")
 }
 
-func homePage(r render.Render) {
+func homePage(res http.ResponseWriter) {
 	players := []*ExtendedPlayer{}
 	o := &ExtendedHome{LoggedIn: true}
 
@@ -55,10 +53,10 @@ func homePage(r render.Render) {
 
 	o.Values = make([]int, rmax)
 	o.Players = players
-	r.HTML(200, "root/home", o)
+	render(res, "root/home", o)
 }
 
-func RootIndex(req *http.Request, r render.Render) {
+func RootIndex(res http.ResponseWriter, req *http.Request) {
 	s, _ := store.Get(req, sessionName)
 	id := s.Values["userId"]
 
@@ -66,11 +64,11 @@ func RootIndex(req *http.Request, r render.Render) {
 		o := &Options{LoggedIn: false}
 		count, err := Db.SelectInt("select count(*) from users")
 		if err == nil && count == 0 {
-			r.HTML(200, "users/new", o)
+			render(res, "users/new", o)
 		} else {
-			r.HTML(200, "root/index", o)
+			render(res, "root/index", o)
 		}
 	} else {
-		homePage(r)
+		homePage(res)
 	}
 }

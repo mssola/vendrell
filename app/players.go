@@ -12,13 +12,12 @@ import (
 	"time"
 
 	"github.com/go-martini/martini"
-	"github.com/martini-contrib/render"
 	"github.com/nu7hatch/gouuid"
 )
 
-func PlayersNew(r render.Render) {
+func PlayersNew(res http.ResponseWriter, req *http.Request) {
 	o := &Options{LoggedIn: true}
-	r.HTML(200, "players/new", o)
+	render(res, "players/new", o)
 }
 
 func PlayersCreate(res http.ResponseWriter, req *http.Request) {
@@ -72,7 +71,6 @@ func getStats(id string) (*Statistics, error) {
 func PlayersShow(
 	res http.ResponseWriter,
 	req *http.Request,
-	r render.Render,
 	params martini.Params,
 ) {
 	var p Player
@@ -100,7 +98,7 @@ func PlayersShow(
 		o.LoggedIn = true
 		o.JS = true
 	}
-	r.HTML(200, "players/show", o)
+	render(res, "players/show", o)
 }
 
 func PlayersUpdate(
@@ -168,11 +166,10 @@ func PlayersRated(
 	res http.ResponseWriter,
 	req *http.Request,
 	params martini.Params,
-	r render.Render,
 ) {
 	p := &Options{Id: params["id"]}
 	if req.FormValue("error") == "true" {
 		p.Error = true
 	}
-	r.HTML(200, "players/rated", p)
+	render(res, "players/rated", p)
 }

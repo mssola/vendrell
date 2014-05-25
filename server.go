@@ -7,7 +7,6 @@ package main
 import (
 	"github.com/go-martini/martini"
 	_ "github.com/lib/pq"
-	"github.com/martini-contrib/render"
 	"github.com/mssola/vendrell/app"
 )
 
@@ -21,14 +20,6 @@ func main() {
 	m.Use(martini.Logger())
 	m.Use(martini.Recovery())
 	m.Use(martini.Static("public"))
-
-	// TODO: what can I do here ? :/
-	m.Use(render.Renderer(render.Options{
-		Layout:     "application/layout",
-		Directory:  "views",
-		Extensions: []string{".tpl"},
-		Funcs:      app.ViewHelpers(),
-	}))
 
 	// Sessions.
 	app.InitSession()
