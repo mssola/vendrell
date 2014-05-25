@@ -1,6 +1,6 @@
 {
 	"ImportPath": "github.com/mssola/vendrell",
-	"GoVersion": "go1.2.2",
+	"GoVersion": "go1.3beta2 +aecdc70c44ac Fri May 23 17:39:58 2014 -0700",
 	"Deps": [
 		{
 			"ImportPath": "code.google.com/p/go.crypto/bcrypt",
@@ -13,9 +13,8 @@
 			"Rev": "6478cc9340cbbe6c04511280c5007722269108e9"
 		},
 		{
-			"ImportPath": "github.com/codegangsta/inject",
-			"Comment": "v1.0-rc1",
-			"Rev": "37d7f8432a3e684eef9b2edece76bdfa6ac85b39"
+			"ImportPath": "github.com/codegangsta/negroni",
+			"Rev": "c18469c22a9a334acf9b168b6e56375d83364d23"
 		},
 		{
 			"ImportPath": "github.com/coopernurse/gorp",
@@ -23,13 +22,12 @@
 			"Rev": "242be3eec6e4d545d0eca24b5dc71236b71ac656"
 		},
 		{
-			"ImportPath": "github.com/go-martini/martini",
-			"Comment": "v1.0-rc1-20-g68f1310",
-			"Rev": "68f131047aa0c227aa36e6d95164f76fee5e3fe5"
-		},
-		{
 			"ImportPath": "github.com/gorilla/context",
 			"Rev": "a08edd30ad9e104612741163dc087a613829a23c"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Rev": "136d54f81f00414c45c3c68dd47e98cc97519c5e"
 		},
 		{
 			"ImportPath": "github.com/gorilla/securecookie",
@@ -44,28 +42,24 @@
 			"Rev": "fda846c284b1b2935e5f977da866408de90e2a10"
 		},
 		{
-			"ImportPath": "github.com/martini-contrib/render",
-			"Rev": "151749ee4940202e80cc4f066107ced4259b9eef"
-		},
-		{
-			"ImportPath": "github.com/martini-contrib/sessions",
-			"Rev": "5fb70e24200d12981048814d5f1732a59671fae4"
-		},
-		{
 			"ImportPath": "github.com/mssola/go-utils/db",
-			"Rev": "031a53d25b7d9b35057e2d63138d667e7ef9fb83"
+			"Comment": "v0.1",
+			"Rev": "3184fbffcee00f0dfe7bcc8af78ea36bd89dd5a4"
 		},
 		{
 			"ImportPath": "github.com/mssola/go-utils/misc",
-			"Rev": "031a53d25b7d9b35057e2d63138d667e7ef9fb83"
+			"Comment": "v0.1",
+			"Rev": "3184fbffcee00f0dfe7bcc8af78ea36bd89dd5a4"
 		},
 		{
 			"ImportPath": "github.com/mssola/go-utils/path",
-			"Rev": "031a53d25b7d9b35057e2d63138d667e7ef9fb83"
+			"Comment": "v0.1",
+			"Rev": "3184fbffcee00f0dfe7bcc8af78ea36bd89dd5a4"
 		},
 		{
 			"ImportPath": "github.com/mssola/go-utils/security",
-			"Rev": "031a53d25b7d9b35057e2d63138d667e7ef9fb83"
+			"Comment": "v0.1",
+			"Rev": "3184fbffcee00f0dfe7bcc8af78ea36bd89dd5a4"
 		},
 		{
 			"ImportPath": "github.com/nu7hatch/gouuid",
