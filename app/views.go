@@ -12,8 +12,6 @@ import (
 	"net/http"
 	"path"
 	"time"
-
-	mpath "github.com/mssola/go-utils/path"
 )
 
 // TODO: we can do something nicer with these structs...
@@ -47,8 +45,7 @@ const (
 )
 
 func view(name string) string {
-	base := mpath.FindRoot("vendrell", ".")
-	return path.Join(base, viewsDir, name+"."+viewsExt)
+	return path.Join(viewsDir, name+"."+viewsExt)
 }
 
 func render(res http.ResponseWriter, name string, data interface{}) {
