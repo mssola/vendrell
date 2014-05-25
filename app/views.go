@@ -50,7 +50,6 @@ func view(name string) string {
 
 func render(res http.ResponseWriter, name string, data interface{}) {
 	b, e := ioutil.ReadFile(view(layout))
-	fmt.Printf("Read file: %v\n", view(layout))
 	if e != nil {
 		panic("Could not read layout file!")
 	}
