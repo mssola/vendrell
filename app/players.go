@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/go-martini/martini"
+	"github.com/gorilla/mux"
 	"github.com/nu7hatch/gouuid"
 )
 
@@ -68,14 +68,11 @@ func getStats(id string) (*Statistics, error) {
 	return s, nil
 }
 
-func PlayersShow(
-	res http.ResponseWriter,
-	req *http.Request,
-	params martini.Params,
-) {
+func PlayersShow(res http.ResponseWriter, req *http.Request) {
 	var p Player
 
 	// Get the user to be shown.
+	params := mux.Vars(req)
 	e := Db.SelectOne(&p, "select * from players where id=$1", params["id"])
 	if e != nil {
 		http.Redirect(res, req, "/", http.StatusFound)
@@ -101,21 +98,15 @@ func PlayersShow(
 	render(res, "players/show", o)
 }
 
-func PlayersUpdate(
-	res http.ResponseWriter,
-	req *http.Request,
-	params martini.Params,
-) {
+func PlayersUpdate(res http.ResponseWriter, req *http.Request) {
+	params := mux.Vars(req)
 	query := "update players set name=$1 where id=$2"
 	Db.Exec(query, req.FormValue("name"), params["id"])
 	http.Redirect(res, req, "/", http.StatusFound)
 }
 
-func PlayersDelete(
-	res http.ResponseWriter,
-	req *http.Request,
-	params martini.Params,
-) {
+func PlayersDelete(res http.ResponseWriter, req *http.Request) {
+	params := mux.Vars(req)
 	Db.Exec("delete from players where id=$1 and name=$2",
 		params["id"], req.FormValue("name"))
 	http.Redirect(res, req, "/", http.StatusFound)
@@ -133,12 +124,9 @@ func fetchRating(rating string) (int, error) {
 	return 0, errors.New("Invalid rating!")
 }
 
-func PlayersRate(
-	res http.ResponseWriter,
-	req *http.Request,
-	params martini.Params,
-) {
+func PlayersRate(res http.ResponseWriter, req *http.Request) {
 	// Get the rating.
+	params := mux.Vars(req)
 	rating, err := fetchRating(req.FormValue("rating"))
 	if err != nil {
 		url := fmt.Sprintf("/players/%v/rate?error=true", params["id"])
@@ -162,11 +150,8 @@ func PlayersRate(
 	http.Redirect(res, req, url, http.StatusFound)
 }
 
-func PlayersRated(
-	res http.ResponseWriter,
-	req *http.Request,
-	params martini.Params,
-) {
+func PlayersRated(res http.ResponseWriter, req *http.Request) {
+	params := mux.Vars(req)
 	p := &Options{Id: params["id"]}
 	if req.FormValue("error") == "true" {
 		p.Error = true

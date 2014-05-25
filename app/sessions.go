@@ -7,6 +7,7 @@ package app
 import (
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 	"github.com/mssola/go-utils/security"
 )
@@ -33,12 +34,9 @@ func IsUserLogged(id interface{}) bool {
 	return e == nil
 }
 
-func UserLogged(res http.ResponseWriter, req *http.Request) {
+func UserLogged(req *http.Request, rm *mux.RouteMatch) bool {
 	s, _ := store.Get(req, sessionName)
-
-	if !IsUserLogged(s.Values["userId"]) {
-		http.Redirect(res, req, "/", http.StatusFound)
-	}
+	return IsUserLogged(s.Values["userId"])
 }
 
 func Login(res http.ResponseWriter, req *http.Request) {

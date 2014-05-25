@@ -5,21 +5,18 @@
 package main
 
 import (
-	"github.com/go-martini/martini"
+	"fmt"
+
+	"github.com/codegangsta/negroni"
+	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
+	"github.com/mssola/go-utils/misc"
 	"github.com/mssola/vendrell/app"
 )
 
 func main() {
-	// The gin in your Martini, the clams on your linguini.
-	// We keep the spring in Springfield!
-	m := martini.New()
-
-	// Let there be middleware.
-	// TODO: can be replaced with negroni.
-	m.Use(martini.Logger())
-	m.Use(martini.Recovery())
-	m.Use(martini.Static("public"))
+	// Because Martini was too mainstream :P
+	n := negroni.Classic()
 
 	// Sessions.
 	app.InitSession()
@@ -29,23 +26,27 @@ func main() {
 	defer app.CloseDB()
 
 	// Routing.
-	// TODO: replace with Gorilla's mux package.
-	r := martini.NewRouter()
-	r.Get("/", app.RootIndex)
-	r.Post("/login", app.Login)
-	r.Post("/logout", app.UserLogged, app.Logout)
-	r.Post("/users", app.UsersCreate)
-	r.Group("/players", func(r martini.Router) {
-		r.Get("/new", app.PlayersNew)
-		r.Post("", app.UserLogged, app.PlayersCreate)
-		r.Get("/:id", app.PlayersShow)
-		r.Post("/:id", app.UserLogged, app.PlayersUpdate)
-		r.Post("/:id/delete", app.UserLogged, app.PlayersDelete)
-		r.Post("/:id/rate", app.PlayersRate)
-		r.Get("/:id/rate", app.PlayersRated)
-	})
-	m.Action(r.Handle)
+	r := mux.NewRouter()
+	r.HandleFunc("/", app.RootIndex).Methods("GET")
+	r.HandleFunc("/login", app.Login).Methods("POST")
+	r.HandleFunc("/logout", app.Logout).Methods("POST").
+		MatcherFunc(app.UserLogged)
+	r.HandleFunc("/users", app.UsersCreate).Methods("POST")
+	r.HandleFunc("/players", app.PlayersCreate).Methods("POST").
+		MatcherFunc(app.UserLogged)
+	s := r.PathPrefix("/players").Subrouter()
+	s.HandleFunc("/new", app.PlayersNew).Methods("GET").
+		MatcherFunc(app.UserLogged)
+	s.HandleFunc("/{id}", app.PlayersShow).Methods("GET")
+	s.HandleFunc("/{id}", app.PlayersUpdate).Methods("POST").
+		MatcherFunc(app.UserLogged)
+	s.HandleFunc("/{id}/delete", app.PlayersDelete).Methods("POST").
+		MatcherFunc(app.UserLogged)
+	s.HandleFunc("/{id}/rate", app.PlayersRate).Methods("POST")
+	s.HandleFunc("/{id}/rate", app.PlayersRated).Methods("GET")
+	n.UseHandler(r)
 
 	// Run, Forrest, run!
-	m.Run()
+	port := fmt.Sprintf(":%v", misc.EnvOrElse("PORT", "3000"))
+	n.Run(port)
 }
