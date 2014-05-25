@@ -52,8 +52,14 @@ func view(name string) string {
 }
 
 func render(res http.ResponseWriter, name string, data interface{}) {
-	b, _ := ioutil.ReadFile(view(layout))
-	t, _ := template.New("l").Funcs(LayoutHelpers(name, data)).Parse(string(b))
+	b, e := ioutil.ReadFile(view(layout))
+	if e != nil {
+		panic("Could not read layout file!")
+	}
+	t, e := template.New("l").Funcs(LayoutHelpers(name, data)).Parse(string(b))
+	if e != nil {
+		panic("Could not parse layout file!")
+	}
 	t.Execute(res, data)
 }
 
@@ -62,9 +68,15 @@ func LayoutHelpers(name string, data interface{}) template.FuncMap {
 		"yield": func() template.HTML {
 			var buffer bytes.Buffer
 
-			b, _ := ioutil.ReadFile(view(name))
+			b, e := ioutil.ReadFile(view(name))
+			if e != nil {
+				panic(fmt.Sprintf("Could not read: %v", name))
+			}
 			t := template.New(name).Funcs(newViewHelpers())
-			t, _ = t.Parse(string(b))
+			t, e = t.Parse(string(b))
+			if e != nil {
+				panic(fmt.Sprintf("Could not parse: %v", name))
+			}
 			t.Execute(&buffer, data)
 			return template.HTML(buffer.String())
 		},
