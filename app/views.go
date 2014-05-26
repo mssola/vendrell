@@ -53,14 +53,14 @@ func render(res http.ResponseWriter, name string, data interface{}) {
 	if e != nil {
 		panic("Could not read layout file!")
 	}
-	t, e := template.New("l").Funcs(LayoutHelpers(name, data)).Parse(string(b))
+	t, e := template.New("l").Funcs(layoutHelpers(name, data)).Parse(string(b))
 	if e != nil {
 		panic("Could not parse layout file!")
 	}
 	t.Execute(res, data)
 }
 
-func LayoutHelpers(name string, data interface{}) template.FuncMap {
+func layoutHelpers(name string, data interface{}) template.FuncMap {
 	return template.FuncMap{
 		"yield": func() template.HTML {
 			var buffer bytes.Buffer
@@ -69,7 +69,7 @@ func LayoutHelpers(name string, data interface{}) template.FuncMap {
 			if e != nil {
 				panic(fmt.Sprintf("Could not read: %v", name))
 			}
-			t := template.New(name).Funcs(newViewHelpers())
+			t := template.New(name).Funcs(viewHelpers())
 			t, e = t.Parse(string(b))
 			if e != nil {
 				panic(fmt.Sprintf("Could not parse: %v", name))
@@ -80,29 +80,13 @@ func LayoutHelpers(name string, data interface{}) template.FuncMap {
 	}
 }
 
-func newViewHelpers() template.FuncMap {
+func viewHelpers() template.FuncMap {
 	return template.FuncMap{
-		"fmtDate": fmtDate,
+		"fmtDate": func(t time.Time) string {
+			return fmt.Sprintf("%02d/%02d/%04d", t.Day(), t.Month(), t.Year())
+		},
 		"inc": func(n int) int {
 			return n + 1
 		},
 	}
-}
-
-// Returns the view helpers for this application.
-// TODO: do not export.
-func ViewHelpers() []template.FuncMap {
-	return []template.FuncMap{
-		{
-			"fmtDate": fmtDate,
-			"inc": func(n int) int {
-				return n + 1
-			},
-		},
-	}
-}
-
-// Returns a date formatted in an nicer way.
-func fmtDate(t time.Time) string {
-	return fmt.Sprintf("%02d/%02d/%04d", t.Day(), t.Month(), t.Year())
 }

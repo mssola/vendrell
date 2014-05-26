@@ -15,29 +15,6 @@ import (
 	"github.com/nu7hatch/gouuid"
 )
 
-func PlayersNew(res http.ResponseWriter, req *http.Request) {
-	o := &Options{LoggedIn: true}
-	render(res, "players/new", o)
-}
-
-func PlayersCreate(res http.ResponseWriter, req *http.Request) {
-	// Get a ne uuid.
-	id, err := uuid.NewV4()
-	if err != nil {
-		http.Redirect(res, req, "/", http.StatusNotFound)
-		return
-	}
-
-	// Try to create a new user and redirect properly.
-	p := &Player{
-		Id:         id.String(),
-		Name:       req.FormValue("name"),
-		Created_at: time.Now(),
-	}
-	Db.Insert(p)
-	http.Redirect(res, req, "/", http.StatusFound)
-}
-
 type Statistics struct {
 	Ratings []Rating
 	Min     int
@@ -66,6 +43,29 @@ func getStats(id string) (*Statistics, error) {
 	avg := count / float64(len(s.Ratings))
 	s.Avg = fmt.Sprintf("%0.2f", avg)
 	return s, nil
+}
+
+func PlayersNew(res http.ResponseWriter, req *http.Request) {
+	o := &Options{LoggedIn: true}
+	render(res, "players/new", o)
+}
+
+func PlayersCreate(res http.ResponseWriter, req *http.Request) {
+	// Get a ne uuid.
+	id, err := uuid.NewV4()
+	if err != nil {
+		http.Redirect(res, req, "/", http.StatusNotFound)
+		return
+	}
+
+	// Try to create a new user and redirect properly.
+	p := &Player{
+		Id:         id.String(),
+		Name:       req.FormValue("name"),
+		Created_at: time.Now(),
+	}
+	Db.Insert(p)
+	http.Redirect(res, req, "/", http.StatusFound)
 }
 
 func PlayersShow(res http.ResponseWriter, req *http.Request) {
