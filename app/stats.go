@@ -12,6 +12,16 @@ import (
 	"time"
 )
 
+type ExtPlayer struct {
+	Id         string
+	Name       string
+	Min        int
+	Max        int
+	Avg        string
+	Ratings    []Rating
+	Created_at time.Time
+}
+
 func statsQuery(one bool) string {
 	q := "select p.id, p.name, min(r.value), max(r.value), avg(r.value),"
 	q += " array_agg(r.value) as values, array_agg(r.created_at)"
@@ -78,7 +88,7 @@ func parseRatings(values, dates string) []Rating {
 	return ratings
 }
 
-func getStats(playerId string, one bool) ([]*NewPlayer, int) {
+func getStats(playerId string, one bool) ([]*ExtPlayer, int) {
 	var rows *sql.Rows
 
 	// Prepare the query.
@@ -91,7 +101,7 @@ func getStats(playerId string, one bool) ([]*NewPlayer, int) {
 
 	// And fetch the players and their ratings.
 	rmax := 0
-	players := []*NewPlayer{}
+	players := []*ExtPlayer{}
 	for rows.Next() {
 		var id, name, values, dates string
 		var min, max int
@@ -103,7 +113,7 @@ func getStats(playerId string, one bool) ([]*NewPlayer, int) {
 				rmax = len(ratings)
 			}
 
-			p := &NewPlayer{
+			p := &ExtPlayer{
 				Id:      id,
 				Name:    name,
 				Min:     min,

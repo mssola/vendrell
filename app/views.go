@@ -22,8 +22,8 @@ const (
 
 type Options struct {
 	Id       string
-	One      *NewPlayer
-	Players  []*NewPlayer
+	One      *ExtPlayer
+	Players  []*ExtPlayer
 	Values   []int
 	LoggedIn bool
 	JS       bool

@@ -26,29 +26,6 @@ type Player struct {
 	Created_at time.Time
 }
 
-// TODO
-type ExtendedPlayer struct {
-	Id         string
-	Name       string
-	Min        int
-	Max        int
-	Avg        string
-	Values     []string
-	Created_at time.Time
-}
-
-// TODO: this will be the extended player. It shouldn't go here, since it's not
-// a model per se.
-type NewPlayer struct {
-	Id         string
-	Name       string
-	Min        int
-	Max        int
-	Avg        string
-	Ratings    []Rating
-	Created_at time.Time
-}
-
 type Rating struct {
 	Id         int
 	Value      int
