@@ -22,7 +22,6 @@ type Options struct {
 	LoggedIn bool
 	Error    bool
 	JS       bool
-	Stats    *Statistics
 }
 
 // TODO: possibly replacing ExtendedHome and Home
