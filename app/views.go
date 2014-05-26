@@ -24,7 +24,7 @@ type Options struct {
 	Id       string
 	One      *NewPlayer
 	Players  []*NewPlayer
-	Values   []int // TODO: HACK
+	Values   []int
 	LoggedIn bool
 	JS       bool
 	Error    bool

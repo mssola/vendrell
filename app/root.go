@@ -13,7 +13,7 @@ func homePage(res http.ResponseWriter) {
 
 	o := &Options{
 		LoggedIn: true,
-		Values:   make([]int, rmax), // TODO
+		Values:   make([]int, rmax),
 		Players:  players,
 	}
 	render(res, "root/home", o)

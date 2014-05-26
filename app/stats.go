@@ -23,9 +23,6 @@ func statsQuery(one bool) string {
 	return q
 }
 
-// TODO: remove
-const psqlFmt = "2014-05-15 21:41:21"
-
 func parseAgg(agg string) []string {
 	clean := strings.TrimPrefix(agg, "{")
 	clean = strings.TrimRight(clean, "}")
@@ -42,7 +39,10 @@ func mustAtoi(str, sep string) (int, int, int) {
 	return first, second, third
 }
 
+// PostgreSQL's timestamps have the following format: 2014-05-15 21:41:21.1234
+// TODO
 func parseDate(complete string) time.Time {
+
 	// TODO: handle error
 	// TODO SPlitN
 
