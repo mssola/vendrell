@@ -25,6 +25,15 @@ type Options struct {
 	Stats    *Statistics
 }
 
+// TODO: possibly replacing ExtendedHome and Home
+type NewOptions struct {
+	One      *NewPlayer
+	Players  []*NewPlayer
+	Values   []int // TODO: HACK
+	LoggedIn bool
+	JS       bool
+}
+
 type ExtendedHome struct {
 	Players  []*ExtendedPlayer
 	Values   []int
@@ -67,12 +76,14 @@ func layoutHelpers(name string, data interface{}) template.FuncMap {
 
 			b, e := ioutil.ReadFile(view(name))
 			if e != nil {
-				panic(fmt.Sprintf("Could not read: %v", name))
+				r := fmt.Sprintf("Could not read: %v => %v", name, e)
+				panic(r)
 			}
 			t := template.New(name).Funcs(viewHelpers())
 			t, e = t.Parse(string(b))
 			if e != nil {
-				panic(fmt.Sprintf("Could not parse: %v", name))
+				r := fmt.Sprintf("Could not parse: %v => %v", name, e)
+				panic(r)
 			}
 			t.Execute(&buffer, data)
 			return template.HTML(buffer.String())

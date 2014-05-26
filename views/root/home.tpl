@@ -16,8 +16,8 @@
                 <td>{{.Min}}</td>
                 <td>{{.Max}}</td>
                 <td>{{.Avg}}</td>
-                {{range .Values}}
-                    <td>{{.}}</td>
+                {{range .Ratings}}
+                    <td>{{.Value}}</td>
                 {{end}}
             </tr>
         {{end}}

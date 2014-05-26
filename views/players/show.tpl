@@ -3,7 +3,7 @@
 
 <div id="left">
 
-{{if .Stats.Ratings}}
+{{if .One.Ratings}}
 
     <table>
         <tr>
@@ -12,9 +12,9 @@
             <th>Mitjana</th>
         </tr>
         <tr>
-            <td>{{.Stats.Min}}</td>
-            <td>{{.Stats.Max}}</td>
-            <td>{{.Stats.Avg}}</td>
+            <td>{{.One.Min}}</td>
+            <td>{{.One.Max}}</td>
+            <td>{{.One.Avg}}</td>
         </tr>
     </table>
 
@@ -24,7 +24,7 @@
             <th>Puntuació</th>
             <th>Data</th>
         </tr>
-        {{range $idx, $rating := .Stats.Ratings}}
+        {{range $idx, $rating := .One.Ratings}}
             <tr>
                 <td>{{inc $idx}}</td>
                 <td>{{$rating.Value}}</td>
@@ -47,8 +47,8 @@
             <h1>Canviar nom</h1>
         </div>
         <div class="dialog-body">
-            <form action="/players/{{.Id}}" method="POST" autocomplete="off" accept-charset="utf-8">
-                <input id="name" class="text" type="text" name="name" placeholder="Nom" value="{{.Name}}" />
+            <form action="/players/{{.One.Id}}" method="POST" autocomplete="off" accept-charset="utf-8">
+                <input id="name" class="text" type="text" name="name" placeholder="Nom" value="{{.One.Name}}" />
                 <input class="btn yellow-btn" type="submit" value="Canviar" />
                 <div class="clearout"></div>
             </form>
@@ -60,7 +60,7 @@
             <h1>Borrar jugador</h1>
         </div>
         <div class="dialog-body">
-            <form action="/players/{{.Id}}/delete" method="POST" autocomplete="off" accept-charset="utf-8">
+            <form action="/players/{{.One.Id}}/delete" method="POST" autocomplete="off" accept-charset="utf-8">
                 <span>Abans de borrar aquest jugador tingues en compte que aquesta
                 acció <b>no</b> és reversible.</span>
                 <p>Com a seguretat extra, si realment vols borrar aquest usuari
@@ -80,7 +80,7 @@
         <h1>Canviar nom</h1>
     </div>
     <div class="dialog-body">
-        <form action="/players/{{.Id}}/rate" method="POST" autocomplete="off" accept-charset="utf-8">
+        <form action="/players/{{.One.Id}}/rate" method="POST" autocomplete="off" accept-charset="utf-8">
             <input class="text" type="number" name="rating" autofocus placeholder="Puntuació" />
             <input class="btn yellow-btn" type="submit" value="Puntuar" />
             <div class="clearout"></div>
