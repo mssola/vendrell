@@ -9,7 +9,7 @@ import (
 )
 
 func homePage(res http.ResponseWriter) {
-	players, rmax := newGetStats("", false)
+	players, rmax := getStats("", false)
 
 	o := &Options{
 		LoggedIn: true,

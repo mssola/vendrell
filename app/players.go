@@ -41,7 +41,7 @@ func PlayersCreate(res http.ResponseWriter, req *http.Request) {
 func PlayersShow(res http.ResponseWriter, req *http.Request) {
 	// Get the user to be shown.
 	params := mux.Vars(req)
-	players, _ := newGetStats(params["id"], true)
+	players, _ := getStats(params["id"], true)
 
 	// Let's make sure that the user exists.
 	if len(players) == 0 {

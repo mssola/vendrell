@@ -78,7 +78,7 @@ func parseRatings(values, dates string) []Rating {
 	return ratings
 }
 
-func newGetStats(playerId string, one bool) ([]*NewPlayer, int) {
+func getStats(playerId string, one bool) ([]*NewPlayer, int) {
 	var rows *sql.Rows
 
 	// Prepare the query.
