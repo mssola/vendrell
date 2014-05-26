@@ -50,7 +50,7 @@ func PlayersShow(res http.ResponseWriter, req *http.Request) {
 	}
 
 	// Prepare parameters and generate the HTML code.
-	o := &NewOptions{One: players[0]}
+	o := &Options{One: players[0]}
 	s, _ := store.Get(req, sessionName)
 	id := s.Values["userId"]
 	if IsUserLogged(id) {

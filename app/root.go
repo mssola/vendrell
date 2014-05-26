@@ -6,19 +6,12 @@ package app
 
 import (
 	"net/http"
-	"strings"
 )
-
-func parseAgg(agg string) []string {
-	clean := strings.TrimPrefix(agg, "{")
-	clean = strings.TrimRight(clean, "}")
-	return strings.Split(clean, ",")
-}
 
 func homePage(res http.ResponseWriter) {
 	players, rmax := newGetStats("", false)
 
-	o := &NewOptions{
+	o := &Options{
 		LoggedIn: true,
 		Values:   make([]int, rmax), // TODO
 		Players:  players,

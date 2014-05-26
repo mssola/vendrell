@@ -26,6 +26,12 @@ func statsQuery(one bool) string {
 // TODO: remove
 const psqlFmt = "2014-05-15 21:41:21"
 
+func parseAgg(agg string) []string {
+	clean := strings.TrimPrefix(agg, "{")
+	clean = strings.TrimRight(clean, "}")
+	return strings.Split(clean, ",")
+}
+
 func mustAtoi(str, sep string) (int, int, int) {
 	// TODO: handle error.
 	// TODO: SplitN

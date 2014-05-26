@@ -14,43 +14,21 @@ import (
 	"time"
 )
 
-// TODO: we can do something nicer with these structs...
-
-type Options struct {
-	Id       string
-	Name     string
-	LoggedIn bool
-	Error    bool
-	JS       bool
-}
-
-// TODO: possibly replacing ExtendedHome and Home
-type NewOptions struct {
-	One      *NewPlayer
-	Players  []*NewPlayer
-	Values   []int // TODO: HACK
-	LoggedIn bool
-	JS       bool
-}
-
-type ExtendedHome struct {
-	Players  []*ExtendedPlayer
-	Values   []int
-	LoggedIn bool
-	JS       bool
-}
-
-type Home struct {
-	Players  []Player
-	LoggedIn bool
-	JS       bool
-}
-
 const (
 	layout   = "application/layout"
 	viewsDir = "views"
 	viewsExt = "tpl"
 )
+
+type Options struct {
+	Id       string
+	One      *NewPlayer
+	Players  []*NewPlayer
+	Values   []int // TODO: HACK
+	LoggedIn bool
+	JS       bool
+	Error    bool
+}
 
 func view(name string) string {
 	return path.Join(viewsDir, name+"."+viewsExt)
