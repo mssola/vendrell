@@ -1,8 +1,9 @@
 
 {{if .LoggedIn}}
 
-<a href="/players/{{.One.Id}}/csv">Baixar-se CSV</a>
-
+<div id="download">
+    <a href="/players/{{.One.Id}}/csv">Baixar-se CSV</a>
+</div>
 
 <div id="left">
 

@@ -1,4 +1,8 @@
 
+<div id="download">
+    <a href="/csv">Baixar-se CSV</a>
+</div>
+
 <div class="force-container">
     <table>
         <tr>

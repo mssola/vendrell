@@ -35,3 +35,8 @@ func RootIndex(res http.ResponseWriter, req *http.Request) {
 		homePage(res)
 	}
 }
+
+func RootCsv(res http.ResponseWriter, req *http.Request) {
+	players, _ := getStats("", false)
+	writeCsv(res, "data", players)
+}

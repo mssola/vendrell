@@ -46,6 +46,8 @@ func main() {
 	s.HandleFunc("/{id}/rate", app.PlayersRated).Methods("GET")
 	s.HandleFunc("/{id}/csv", app.PlayersCsv).Methods("GET").
 		MatcherFunc(app.UserLogged)
+	r.HandleFunc("/csv", app.RootCsv).Methods("GET").
+		MatcherFunc(app.UserLogged)
 	n.UseHandler(r)
 
 	// Run, Forrest, run!
