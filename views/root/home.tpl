@@ -1,4 +1,6 @@
 
+{{if .Players}}
+
 <div class="force-container">
     <table>
         <tr>
@@ -23,4 +25,12 @@
         {{end}}
     </table>
 </div>
+
+{{else}}
+
+<div class="force-empty">
+    <span class="empty">No hi ha cap jugador que hagi valorat entrenaments.</span>
+</div>
+
+{{end}}
 

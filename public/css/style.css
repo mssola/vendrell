@@ -252,7 +252,7 @@ header a:hover {
     text-align: center;
 }
 
-#left .empty {
+.empty {
     margin: 10px 0px;
     text-align: center;
     color: #615B5B;
@@ -267,6 +267,11 @@ header a:hover {
 
 .force-container th {
     padding: 8px 5px;
+}
+
+.force-empty {
+    text-align: center;
+    margin: 50px;
 }
 
 table {
