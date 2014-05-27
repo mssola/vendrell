@@ -77,7 +77,7 @@
 
 <div class="dialog">
     <div class="dialog-header">
-        <h1>Canviar nom</h1>
+        <h1>Puntuar</h1>
     </div>
     <div class="dialog-body">
         <form action="/players/{{.One.Id}}/rate" method="POST" autocomplete="off" accept-charset="utf-8">

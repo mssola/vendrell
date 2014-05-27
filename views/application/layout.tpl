@@ -3,7 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <title>Entrenaments</title>
-    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link href="/css/mobile.css" media="only screen and (max-width: 480px)" rel="stylesheet" type="text/css" />
+    <link href="/css/style.css" media="only screen and (min-width: 480px)" rel="stylesheet" type="text/css" />
     {{if .JS}}
     <script src="/js/vendrell.js"></script>
     {{end}}
