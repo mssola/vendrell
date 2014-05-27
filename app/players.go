@@ -5,6 +5,7 @@
 package app
 
 import (
+	"encoding/csv"
 	"errors"
 	"fmt"
 	"net/http"
@@ -119,4 +120,41 @@ func PlayersRated(res http.ResponseWriter, req *http.Request) {
 		p.Error = true
 	}
 	render(res, "players/rated", p)
+}
+
+func PlayersCsv(res http.ResponseWriter, req *http.Request) {
+	params := mux.Vars(req)
+	players, _ := getStats(params["id"], true)
+
+	// Let's make sure that the user exists.
+	if len(players) == 0 {
+		http.Redirect(res, req, "/", http.StatusFound)
+		return
+	}
+
+	// Write the CSV.
+	writeCsv(res, players[0].Name, players)
+}
+
+func writeCsv(res http.ResponseWriter, name string, players []*ExtPlayer) {
+	// Set the headers for CSV.
+	res.Header().Set("Content-Type", "text/csv")
+	cd := "attachment;filename=" + name + ".csv"
+	res.Header().Set("Content-Disposition", cd)
+
+	// Finally write the data.
+	w := csv.NewWriter(res)
+	for _, v := range players {
+		min, max := strconv.Itoa(v.Min), strconv.Itoa(v.Max)
+		w.Write([]string{v.Name, min, max, v.Avg})
+
+		data := []string{v.Name}
+		for _, r := range v.Ratings {
+			data = append(data, strconv.Itoa(r.Value))
+			data = append(data, fmtDate(r.Created_at))
+		}
+		w.Write(data)
+		w.Write([]string{}) // Extra line.
+	}
+	w.Flush()
 }

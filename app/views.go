@@ -70,11 +70,13 @@ func layoutHelpers(name string, data interface{}) template.FuncMap {
 
 func viewHelpers() template.FuncMap {
 	return template.FuncMap{
-		"fmtDate": func(t time.Time) string {
-			return fmt.Sprintf("%02d/%02d/%04d", t.Day(), t.Month(), t.Year())
-		},
+		"fmtDate": fmtDate,
 		"inc": func(n int) int {
 			return n + 1
 		},
 	}
+}
+
+func fmtDate(t time.Time) string {
+	return fmt.Sprintf("%02d/%02d/%04d", t.Day(), t.Month(), t.Year())
 }

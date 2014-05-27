@@ -1,6 +1,9 @@
 
 {{if .LoggedIn}}
 
+<a href="/players/{{.One.Id}}/csv">Baixar-se CSV</a>
+
+
 <div id="left">
 
 {{if .One.Ratings}}
