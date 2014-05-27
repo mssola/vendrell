@@ -1,0 +1,119 @@
+
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: helvetica, arial,freesans,clean,sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    background-color: #f9f9f9;
+    text-shadow: none;
+}
+
+a, a:hover, a:active, a:focus, a:visited {
+    /* Don't let Firefox's stupid outline dots to appear */
+    outline: 0;
+}
+
+a:visited {
+    color: #1F1FE0;
+}
+
+button::-moz-focus-inner {
+    /* Don't let Firefox's stupid outline dots to appear */
+    border: 0;
+}
+
+input::-moz-focus-inner {
+    /* Don't let Firefox's stupid outline dots to appear */
+    border: 0;
+}
+
+.wrapper {
+    display: table;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.dialog {
+  text-align: center;
+}
+
+.dialog .dialog-header {
+    text-align: center;
+    position: relative;
+    padding: 0px 5px;
+    margin: 0;
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+    background-color: #2d618c;
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(30%,#3776ab),color-stop(95%,#2d618c));
+    background-image: -webkit-linear-gradient(#3776ab 30%,#2d618c 95%);
+    background-image: -moz-linear-gradient(#3776ab 30%,#2d618c 95%);
+    background-image: -o-linear-gradient(#3776ab 30%,#2d618c 95%);
+    background-image: linear-gradient(#3776ab 30%,#2d618c 95%);
+    border-bottom: 1px solid #18334b;
+    background-repeat: repeat-x;
+    border: 1px solid #586873;
+    border-bottom-color: #586873;
+}
+
+.dialog .text {
+    min-height: 34px;
+    padding-left: 10px;
+    outline: none;
+    color: #333;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+    vertical-align: middle;
+    font-size: 13px;
+    display: block;
+    width: 90%;
+    margin: 20px auto 20px auto;
+    box-sizing: border-box;
+}
+
+.dialog .text:hover {
+    border-color: #a0a0a0 #b9b9b9 #b9b9b9 #b9b9b9!important;
+}
+
+.dialog-body-text {
+  font-size: 16px;
+  margin: 20px;
+}
+
+.btn {
+    position: relative;
+    font-weight: bold;
+    font-size: 16px;
+    width: 90%;
+    padding: .4em .75em .35em;
+    white-space: nowrap;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.yellow-btn {
+    background-color: #ffd343;
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(10%,#ffdf76),color-stop(90%,#ffd343));
+    background-image: -webkit-linear-gradient(#ffdf76 10%,#ffd343 90%);
+    background-image: -moz-linear-gradient(#ffdf76 10%,#ffd343 90%);
+    background-image: -o-linear-gradient(#ffdf76 10%,#ffd343 90%);
+    background-image: linear-gradient(#ffdf76 10%,#ffd343 90%);
+    border: 1px solid #dca900;
+    color: #4d4d4d!important;
+}
+

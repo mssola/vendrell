@@ -81,8 +81,8 @@
     </div>
     <div class="dialog-body">
         <form action="/players/{{.One.Id}}/rate" method="POST" autocomplete="off" accept-charset="utf-8">
-            <input class="text" type="number" name="rating" autofocus placeholder="Puntuació" />
-            <input class="btn yellow-btn" type="submit" value="Puntuar" />
+            <input class="text" type="number" name="rating" autofocus placeholder="Puntuació (0-10)" />
+            <input class="btn yellow-btn" type="submit" value="Enviar" />
             <div class="clearout"></div>
         </form>
     </diV>
