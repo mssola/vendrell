@@ -25,6 +25,7 @@ type Options struct {
 	One      *ExtPlayer
 	Players  []*ExtPlayer
 	Values   []int
+	Download string
 	LoggedIn bool
 	JS       bool
 	Error    bool

@@ -57,6 +57,7 @@ func PlayersShow(res http.ResponseWriter, req *http.Request) {
 	if IsUserLogged(id) {
 		o.LoggedIn = true
 		o.JS = true
+		o.Download = "/players/" + params["id"] + "/csv"
 	}
 	render(res, "players/show", o)
 }

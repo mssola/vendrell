@@ -15,6 +15,9 @@
         <div class="right">
           <div class="inner">
             <a href="/">Inici</a>
+            {{if .Download}}
+            <a href="{{.Download}}">Baixar-se CSV</a>
+            {{end}}
             <a href="/players/new">Crear jugador</a>
             <form id="logout" action="/logout" method="POST">
                 <input class="btn yellow-btn" type="submit" value="Surt" />

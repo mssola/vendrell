@@ -15,6 +15,7 @@ func homePage(res http.ResponseWriter) {
 		LoggedIn: true,
 		Values:   make([]int, rmax),
 		Players:  players,
+		Download: "/csv",
 	}
 	render(res, "root/home", o)
 }
