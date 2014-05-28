@@ -72,7 +72,7 @@ if ($cover =~ /coverage:\s?(.+)%/) {
     }
     `rm -f c.out`;
 } else {
-    print "No tests found in package '$pkg'.";
+    print "No tests found in package '$pkg'.\n";
 }
 
 # Fmt tool
