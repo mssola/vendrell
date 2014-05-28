@@ -13,6 +13,21 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func login(res http.ResponseWriter, req *http.Request) {
+	var user User
+	err := Db.SelectOne(&user, "select * from users")
+	if err != nil {
+		panic("There are no users...")
+	}
+
+	s, err := store.Get(req, sessionName)
+	if err != nil {
+		panic("Could not get cookie store...")
+	}
+	s.Values["userId"] = user.Id
+	s.Save(req, res)
+}
+
 func TestUserLogged(t *testing.T) {
 	InitTest()
 	defer CloseDB()
@@ -91,4 +106,28 @@ func TestLogin(t *testing.T) {
 	err = Db.SelectOne(&user, "select * from users")
 	assert.Nil(t, err)
 	assert.Equal(t, s.Values["userId"], user.Id)
+}
+
+func TestLogout(t *testing.T) {
+	InitTest()
+	defer CloseDB()
+
+	// Create the user and loggin it in.
+	createUser("user", "1111")
+	req, err := http.NewRequest("POST", "/", nil)
+	assert.Nil(t, err)
+	w := httptest.NewRecorder()
+	login(w, req)
+
+	// Check that the user has really been logged in.
+	var user User
+	err = Db.SelectOne(&user, "select * from users")
+	assert.Nil(t, err)
+	s, _ := store.Get(req, sessionName)
+	assert.Equal(t, s.Values["userId"], user.Id)
+
+	// Logout
+	Logout(w, req)
+	s, _ = store.Get(req, sessionName)
+	assert.Empty(t, s.Values["userId"])
 }
