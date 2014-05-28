@@ -20,9 +20,10 @@ import (
 )
 
 func InitTest() {
+	InitSession()
+
 	os.Setenv("VENDRELL_ENV", "test")
 	InitDB()
-
 	tables := []string{"users", "ratings", "players"}
 	for _, v := range tables {
 		_, err := Db.Db.Exec(fmt.Sprintf("truncate table %v cascade", v))

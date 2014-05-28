@@ -13,7 +13,7 @@
     },
     "test": {
         "user": "postgres",
-        "dbname": "vendrell-test",
+        "dbname": "vendrell",
         "password": "",
         "sslmode": "disable"
     }

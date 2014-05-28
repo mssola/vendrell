@@ -8,7 +8,7 @@ matrix:
         - go: tip
 before_script:
     - cp db/test.json db/database.json
-    - psql -c 'create database vendrell-test;' -U postgres
+    - psql -c 'create database vendrell;' -U postgres
     - ./script/db -e test < db/tables.sql
 install:
     - go get github.com/stretchr/testify/assert
