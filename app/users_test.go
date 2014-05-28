@@ -21,6 +21,7 @@ import (
 
 func InitTest() {
 	InitSession()
+	viewsDir = "../views"
 
 	os.Setenv("VENDRELL_ENV", "test")
 	InitDB()

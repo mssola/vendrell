@@ -14,27 +14,53 @@ import (
 	"time"
 )
 
-const (
-	layout   = "application/layout"
+var (
+	// The directory where all the views are being stored.
 	viewsDir = "views"
+)
+
+const (
+	// The path to the layout file.
+	layout = "application/layout"
+
+	// The extension of views.
 	viewsExt = "tpl"
 )
 
+// This struct holds all the data that can be passed to a view.
 type Options struct {
-	Id       string
-	One      *ExtPlayer
-	Players  []*ExtPlayer
-	Values   []int
+	// The id of the current user.
+	Id string
+
+	// The current player.
+	One *ExtPlayer
+
+	// All the players to be displayed.
+	Players []*ExtPlayer
+
+	// The maximum number of values to be displayed for a set of players.
+	Values []int
+
+	// The URL of "Download CSV". It might change depending where we are.
 	Download string
+
+	// Set to true if the current user is logged in.
 	LoggedIn bool
-	JS       bool
-	Error    bool
+
+	// Set to true if the views has to include Javascript.
+	JS bool
+
+	// Set to true if an error has happenned.
+	Error bool
 }
 
+// Returns the path to be used to open the view with the given name.
 func view(name string) string {
 	return path.Join(viewsDir, name+"."+viewsExt)
 }
 
+// Render the view with the given name after evaluating the passed data. The
+// rendered view will be written to the given writer.
 func render(res http.ResponseWriter, name string, data interface{}) {
 	b, e := ioutil.ReadFile(view(layout))
 	if e != nil {
@@ -47,6 +73,8 @@ func render(res http.ResponseWriter, name string, data interface{}) {
 	t.Execute(res, data)
 }
 
+// Returns all the helpers used by the layout template. Right now only the
+// "yield" helpers has been implemented.
 func layoutHelpers(name string, data interface{}) template.FuncMap {
 	return template.FuncMap{
 		"yield": func() template.HTML {
@@ -69,6 +97,9 @@ func layoutHelpers(name string, data interface{}) template.FuncMap {
 	}
 }
 
+// Returns all the helpers available to any view. We have the following
+// helpers: fmtDate and inc. The inc helper just increases the given integer
+// value by one. The fmtDate helper executes the fmtDate function.
 func viewHelpers() template.FuncMap {
 	return template.FuncMap{
 		"fmtDate": fmtDate,
@@ -78,6 +109,7 @@ func viewHelpers() template.FuncMap {
 	}
 }
 
+// Returns a string with the given time formatted as expected by the view.
 func fmtDate(t time.Time) string {
 	return fmt.Sprintf("%02d/%02d/%04d", t.Day(), t.Month(), t.Year())
 }

@@ -8,6 +8,7 @@ import (
 	"net/http"
 )
 
+// Renders the home page for a logged in user.
 func homePage(res http.ResponseWriter) {
 	players, rmax := getStats("", false)
 
@@ -20,6 +21,11 @@ func homePage(res http.ResponseWriter) {
 	render(res, "root/home", o)
 }
 
+// Renders the root page. It has three different options:
+//
+//  1. If there's no user, it renders the "Create user" page.
+//  2. If the current user is not logged in, it render the "Login" page.
+//  3. If the current user is logged in, then it call homePage.
 func RootIndex(res http.ResponseWriter, req *http.Request) {
 	s, _ := store.Get(req, sessionName)
 	id := s.Values["userId"]

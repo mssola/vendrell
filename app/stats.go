@@ -29,7 +29,7 @@ func statsQuery(one bool) string {
 	if one {
 		q += " and p.id = $1"
 	}
-	q += " group by p.id, p.name"
+	q += " group by p.id, p.name order by p.name"
 	return q
 }
 
