@@ -5,14 +5,14 @@
 
 create table users (
     id uuid primary key,
-    name varchar(255) unique not null,
+    name varchar(255) unique not null check (name <> ''),
     password_hash text,
     created_at timestamp
 );
 
 create table players (
     id uuid primary key,
-    name varchar(255) unique not null,
+    name varchar(255) unique not null check (name <> ''),
     created_at timestamp
 );
 

@@ -90,13 +90,17 @@ func parseRatings(values, dates string) []Rating {
 
 func getStats(playerId string, one bool) ([]*ExtPlayer, int) {
 	var rows *sql.Rows
+	var err error
 
 	// Prepare the query.
 	q := statsQuery(one)
 	if one {
-		rows, _ = Db.Db.Query(q, playerId)
+		rows, err = Db.Db.Query(q, playerId)
 	} else {
-		rows, _ = Db.Db.Query(q)
+		rows, err = Db.Db.Query(q)
+	}
+	if err != nil {
+		return []*ExtPlayer{}, 0
 	}
 
 	// And fetch the players and their ratings.
