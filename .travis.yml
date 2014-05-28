@@ -11,5 +11,4 @@ before_script:
     - psql -c 'create database vendrell;' -U postgres
     - ./script/db -e test < db/tables.sql
 install:
-    - go get github.com/stretchr/testify/assert
-    - go get -d ./... && go build -v ./...
+    - go get -d ./... && go get -i ./... && go build -v ./...
