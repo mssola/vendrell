@@ -12,8 +12,9 @@ import (
 	"github.com/nu7hatch/gouuid"
 )
 
+// Creates a user. It expects the "name" and the "password" form values to be
+// present. Moreover, only one user is allowed in this application.
 func UsersCreate(res http.ResponseWriter, req *http.Request) {
-	// Only one user is allowed in this application.
 	count, err := Db.SelectInt("select count(*) from users")
 	if err != nil || count > 0 {
 		http.Redirect(res, req, "/", http.StatusFound)

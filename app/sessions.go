@@ -12,10 +12,14 @@ import (
 	"github.com/mssola/go-utils/security"
 )
 
+// Global variable that holds the cookie store for this application. It gets
+// initialized by calling the InitSession function.
 var store *sessions.CookieStore
 
+// The name of the session to be used for the safe cookies.
 const sessionName = "vendrell"
 
+// Initialize the global cookie store.
 func InitSession() {
 	store = sessions.NewCookieStore([]byte(security.NewAuthToken()))
 	store.Options = &sessions.Options{
@@ -24,6 +28,7 @@ func InitSession() {
 	}
 }
 
+// Returns true if the user with the given id exists, false otherwise.
 func IsUserLogged(id interface{}) bool {
 	if id == nil {
 		return false
@@ -34,11 +39,15 @@ func IsUserLogged(id interface{}) bool {
 	return e == nil
 }
 
+// A route matcher as expected by the mux package. It returns true (thus,
+// accepting the route) if the current user is logged in, false otherwise.
 func UserLogged(req *http.Request, rm *mux.RouteMatch) bool {
 	s, _ := store.Get(req, sessionName)
 	return IsUserLogged(s.Values["userId"])
 }
 
+// Login a user. It expects the "name" and "password" form values. Regardless
+// if it was successful or not, it will redirect the user to the root path.
 func Login(res http.ResponseWriter, req *http.Request) {
 	var u User
 
@@ -57,6 +66,7 @@ func Login(res http.ResponseWriter, req *http.Request) {
 	http.Redirect(res, req, "/", http.StatusFound)
 }
 
+// Logout the current user.
 func Logout(res http.ResponseWriter, req *http.Request) {
 	s, _ := store.Get(req, sessionName)
 	delete(s.Values, "userId")
