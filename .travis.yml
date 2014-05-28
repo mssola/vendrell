@@ -10,3 +10,6 @@ before_script:
     - cp db/test.json db/database.json
     - psql -c 'create database vendrell-test;' -U postgres
     - ./script/db -e test < db/tables.sql
+install:
+    - go get github.com/stretchr/testify/assert
+    - go get -d ./... && go build -v ./...
