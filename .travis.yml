@@ -1,8 +1,12 @@
 language: go
 go:
-  - 1.1
-  - 1.2
-  - tip
+    - 1.1
+    - 1.2
+    - tip
 matrix:
-  allow_failures:
-    - go: tip
+    allow_failures:
+        - go: tip
+before_script:
+    - cp db/test.json db/database.json
+    - psql -c 'create database vendrell-test;' -U postgres
+    - ./script/db -e test < db/tables.sql
