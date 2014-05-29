@@ -6,6 +6,7 @@ package app
 
 import (
 	"encoding/csv"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -72,7 +73,62 @@ func TestPlayersCreate(t *testing.T) {
 }
 
 func TestPlayersShow(t *testing.T) {
-	// TODO
+	InitTest()
+	defer CloseDB()
+
+	m := mux.NewRouter()
+	m.HandleFunc("/{id}", PlayersShow)
+
+	// No players.
+	req, err := http.NewRequest("GET", "/1", nil)
+	assert.Nil(t, err)
+	w := httptest.NewRecorder()
+	m.ServeHTTP(w, req)
+	assert.Equal(t, w.Code, 302)
+	errorUrl := []string{"/"}
+	assert.Equal(t, w.Header()["Location"], errorUrl)
+
+	// Create some players.
+	createPlayer("one", []int{})
+	createPlayer("another", []int{1, 2, 3})
+	var one, another Player
+	err = Db.SelectOne(&one, "select * from players where name=$1", "one")
+	assert.Nil(t, err)
+	err = Db.SelectOne(&another, "select * from players where name=$1", "another")
+	assert.Nil(t, err)
+	createUser("user", "1111")
+
+	// Login and perform a couple of requests.
+	req, err = http.NewRequest("GET", "/"+one.Id, nil)
+	assert.Nil(t, err)
+	w = httptest.NewRecorder()
+	login(w, req)
+	m.ServeHTTP(w, req)
+	assert.Equal(t, w.Code, 200)
+	assert.Contains(t, w.Body.String(), "<span class=\"empty\">Aquest"+
+		" jugador encara no ha valorat cap entrenament.</span>")
+
+	// And now the other player.
+	req, err = http.NewRequest("GET", "/"+another.Id, nil)
+	assert.Nil(t, err)
+	w = httptest.NewRecorder()
+	login(w, req)
+	m.ServeHTTP(w, req)
+	assert.Equal(t, w.Code, 200)
+	assert.Contains(t, w.Body.String(),
+		`
+    <table>
+        <tr>
+            <th>Mínim</th>
+            <th>Màxim</th>
+            <th>Mitjana</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>3</td>
+            <td>2.00</td>
+        </tr>
+    </table>`)
 }
 
 func TestPlayersUpdate(t *testing.T) {
@@ -141,7 +197,55 @@ func TestPlayersDelete(t *testing.T) {
 }
 
 func TestPlayersRate(t *testing.T) {
-	// TODO
+	InitTest()
+	defer CloseDB()
+
+	// Invalid Rating (it's not a number).
+	m := mux.NewRouter()
+	m.HandleFunc("/{id}", PlayersRate)
+	r, err := http.NewRequest("POST", "/1", nil)
+	assert.Nil(t, err)
+	w := httptest.NewRecorder()
+	m.ServeHTTP(w, r)
+	assert.Equal(t, w.Code, 302)
+	errorUrl := []string{"/players/1/rate?error=true"}
+	assert.Equal(t, w.Header()["Location"], errorUrl)
+
+	// Invalid Rating (out of range number).
+	r, err = http.NewRequest("POST", "/1", nil)
+	assert.Nil(t, err)
+	param := make(url.Values)
+	param["rating"] = []string{"11"}
+	r.PostForm = param
+	w = httptest.NewRecorder()
+	m.ServeHTTP(w, r)
+	assert.Equal(t, w.Code, 302)
+	assert.Equal(t, w.Header()["Location"], errorUrl)
+
+	// Invalid id parameter.
+	r, err = http.NewRequest("POST", "/1", nil)
+	assert.Nil(t, err)
+	param["rating"] = []string{"5"}
+	r.PostForm = param
+	w = httptest.NewRecorder()
+	m.ServeHTTP(w, r)
+	assert.Equal(t, w.Code, 302)
+	assert.Equal(t, w.Header()["Location"], errorUrl)
+
+	// Ok.
+	createPlayer("user", []int{1, 2, 3})
+	var p Player
+	err = Db.SelectOne(&p, "select * from players where name=$1", "user")
+	assert.Nil(t, err)
+
+	r, err = http.NewRequest("POST", "/"+p.Id, nil)
+	assert.Nil(t, err)
+	r.PostForm = param
+	w = httptest.NewRecorder()
+	m.ServeHTTP(w, r)
+	assert.Equal(t, w.Code, 302)
+	okUrl := []string{fmt.Sprintf("/players/%v/rate", p.Id)}
+	assert.Equal(t, w.Header()["Location"], okUrl)
 }
 
 func TestPlayersRated(t *testing.T) {
