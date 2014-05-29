@@ -35,6 +35,9 @@ type Options struct {
 	// The current player.
 	One *ExtPlayer
 
+	// TODO
+	BasicPlayers []Player
+
 	// All the players to be displayed.
 	Players []*ExtPlayer
 

@@ -21,6 +21,16 @@ func PlayersNew(res http.ResponseWriter, req *http.Request) {
 	render(res, "players/new", o)
 }
 
+// TODO
+func PlayersIndex(res http.ResponseWriter, req *http.Request) {
+	players := []Player{}
+	o := &Options{LoggedIn: true}
+
+	Db.Select(&players, "select * from players order by name")
+	o.BasicPlayers = players
+	render(res, "players/index", o)
+}
+
 func PlayersCreate(res http.ResponseWriter, req *http.Request) {
 	// Get a ne uuid.
 	id, err := uuid.NewV4()
