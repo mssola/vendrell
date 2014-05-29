@@ -151,19 +151,13 @@ func getStats(playerId string, one bool) ([]*ExtPlayer, int) {
 
 		if ed := rows.Scan(&id, &name, &min, &max, &avg, &values, &dates); ed == nil {
 			ratings := parseRatings(values, dates)
-			if l := len(ratings); l == 0 {
-				min, max, avg = new(int), new(int), new(float64)
-			} else if l > rmax {
-				rmax = len(ratings)
-			}
+			p := &ExtPlayer{Id: id, Name: name, Ratings: ratings}
 
-			p := &ExtPlayer{
-				Id:      id,
-				Name:    name,
-				Min:     *min,
-				Max:     *max,
-				Avg:     fmt.Sprintf("%.2f", *avg),
-				Ratings: ratings,
+			if l := len(ratings); l > 0 {
+				p.Min, p.Max, p.Avg = *min, *max, fmt.Sprintf("%0.2f", *avg)
+				if l > rmax {
+					rmax = len(ratings)
+				}
 			}
 			players = append(players, p)
 		}
