@@ -39,13 +39,17 @@ type ExtPlayer struct {
 // Returns a string containing the creepy SQL statement to be executed in
 // order to obtain the stats of a player.
 func statsQuery(one bool) string {
-	q := "select p.id, p.name, min(r.value), max(r.value), avg(r.value),"
-	q += " array_agg(r.value) as values, array_agg(r.created_at)"
-	q += " from players p, ratings r where r.player_id = p.id"
+	q := `
+        SELECT p.id, p.name, min(r.value), max(r.value), avg(r.value),
+            array_agg(r.value ORDER BY r.created_at) as values,
+            array_agg(r.created_at ORDER BY r.created_at)
+        FROM players p
+        LEFT JOIN ratings r ON p.id = r.player_id
+    `
 	if one {
-		q += " and p.id = $1"
+		q += " WHERE p.id = $1"
 	}
-	q += " group by p.id, p.name order by p.name"
+	q += " GROUP BY p.id, p.name ORDER BY p.name"
 	return q
 }
 
@@ -53,12 +57,22 @@ func statsQuery(one bool) string {
 func parseAgg(agg string) []string {
 	clean := strings.TrimPrefix(agg, "{")
 	clean = strings.TrimRight(clean, "}")
+
+	// Left joins might set nil values to "{NULL}".
+	if clean == "NULL" {
+		return []string{}
+	}
 	return strings.Split(clean, ",")
 }
 
 // Returns three integers that are inside the given string. This given string
 // is basically a set of integers separated by the given sep value.
 func mustAtoi(str, sep string) (int, int, int) {
+	// Left joins might set nil values to "NULL".
+	if str == "" || str == "NULL" {
+		return -1, -1, -1
+	}
+
 	vals := strings.SplitN(str, sep, 3)
 	first, _ := strconv.Atoi(vals[0])
 	second, _ := strconv.Atoi(vals[1])
@@ -69,6 +83,11 @@ func mustAtoi(str, sep string) (int, int, int) {
 // Parse a date from a PostgreSQL's timestamp. PostgreSQL's timestamps have the
 // following format: 2014-05-15 21:41:21.1234
 func parseDate(complete string) time.Time {
+	// Left joins might set nil values to "NULL".
+	if complete == "" || complete == "NULL" {
+		return time.Now()
+	}
+
 	complete = strings.TrimPrefix(complete, "\"")
 	complete = strings.TrimSuffix(complete, "\"")
 
@@ -113,17 +132,13 @@ func parseRatings(values, dates string) []Rating {
 // have rated.
 func getStats(playerId string, one bool) ([]*ExtPlayer, int) {
 	var rows *sql.Rows
-	var err error
 
 	// Prepare the query.
 	q := statsQuery(one)
 	if one {
-		rows, err = Db.Db.Query(q, playerId)
+		rows, _ = Db.Db.Query(q, playerId)
 	} else {
-		rows, err = Db.Db.Query(q)
-	}
-	if err != nil {
-		return []*ExtPlayer{}, 0
+		rows, _ = Db.Db.Query(q)
 	}
 
 	// And fetch the players and their ratings.
@@ -131,21 +146,23 @@ func getStats(playerId string, one bool) ([]*ExtPlayer, int) {
 	players := []*ExtPlayer{}
 	for rows.Next() {
 		var id, name, values, dates string
-		var min, max int
-		var avg float64
+		var min, max *int
+		var avg *float64
 
 		if ed := rows.Scan(&id, &name, &min, &max, &avg, &values, &dates); ed == nil {
 			ratings := parseRatings(values, dates)
-			if len(ratings) > rmax {
+			if l := len(ratings); l == 0 {
+				min, max, avg = new(int), new(int), new(float64)
+			} else if l > rmax {
 				rmax = len(ratings)
 			}
 
 			p := &ExtPlayer{
 				Id:      id,
 				Name:    name,
-				Min:     min,
-				Max:     max,
-				Avg:     fmt.Sprintf("%.2f", avg),
+				Min:     *min,
+				Max:     *max,
+				Avg:     fmt.Sprintf("%.2f", *avg),
 				Ratings: ratings,
 			}
 			players = append(players, p)

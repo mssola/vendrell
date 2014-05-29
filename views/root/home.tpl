@@ -5,9 +5,11 @@
     <table>
         <tr>
             <th>Jugador</th>
-            <th>Mínim</th>
-            <th>Màxim</th>
-            <th>Mitjana</th>
+            {{if len .Values}}
+                <th>Mínim</th>
+                <th>Màxim</th>
+                <th>Mitjana</th>
+            {{end}}
             {{range $id, $e := .Values}}
                 <th>{{inc $id}}</th>
             {{end}}
@@ -15,9 +17,11 @@
         {{range .Players}}
             <tr>
                 <td><a href="/players/{{.Id}}">{{.Name}}</a></td>
-                <td>{{.Min}}</td>
-                <td>{{.Max}}</td>
-                <td>{{.Avg}}</td>
+                {{if .Ratings}}
+                    <td>{{.Min}}</td>
+                    <td>{{.Max}}</td>
+                    <td>{{.Avg}}</td>
+                {{end}}
                 {{range .Ratings}}
                     <td>{{.Value}}</td>
                 {{end}}

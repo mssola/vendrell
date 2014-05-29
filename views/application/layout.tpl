@@ -21,7 +21,6 @@
             <a href="{{.Download}}">Baixar-se CSV</a>
             {{end}}
             <a href="/players/new">Crear jugador</a>
-            <a href="/players">Jugadors</a>
             <form id="logout" action="/logout" method="POST">
                 <input class="btn yellow-btn" type="submit" value="Surt" />
             </form>

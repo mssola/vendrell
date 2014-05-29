@@ -34,7 +34,6 @@ func main() {
 	r.HandleFunc("/users", app.UsersCreate).Methods("POST")
 	r.HandleFunc("/players", app.PlayersCreate).Methods("POST").
 		MatcherFunc(app.UserLogged)
-	r.HandleFunc("/players", app.PlayersIndex).Methods("GET")
 	s := r.PathPrefix("/players").Subrouter()
 	s.HandleFunc("/new", app.PlayersNew).Methods("GET").
 		MatcherFunc(app.UserLogged)
