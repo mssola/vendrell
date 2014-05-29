@@ -22,7 +22,7 @@ func PlayersNew(res http.ResponseWriter, req *http.Request) {
 }
 
 func PlayersCreate(res http.ResponseWriter, req *http.Request) {
-	// Get a ne uuid.
+	// Get a new uuid.
 	id, err := uuid.NewV4()
 	if err != nil {
 		http.Redirect(res, req, "/", http.StatusNotFound)
