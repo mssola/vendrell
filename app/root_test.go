@@ -118,10 +118,12 @@ func TestRootCsv(t *testing.T) {
 	assert.Equal(t, header["Content-Disposition"][0],
 		"attachment;filename=data.csv")
 
+	dt := fmtDate(time.Now())
+
 	// CSV
 	r := csv.NewReader(w.Body)
 	testCSV(t, r, 4, "another", "0", "8", "3.67")
-	testCSV(t, r, 7, "another", "0", "28/05/2014", "3", "28/05/2014", "8", "28/05/2014")
+	testCSV(t, r, 7, "another", "0", dt, "3", dt, "8", dt)
 	testCSV(t, r, 4, "one", "1", "3", "2.00")
-	testCSV(t, r, 7, "one", "1", "28/05/2014", "2", "28/05/2014", "3", "28/05/2014")
+	testCSV(t, r, 7, "one", "1", dt, "2", dt, "3", dt)
 }
