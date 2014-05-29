@@ -1,8 +1,8 @@
 # README [![Build Status](https://travis-ci.org/mssola/vendrell.svg?branch=master)](https://travis-ci.org/mssola/vendrell)
 
-This a web application that I created for a friend of mine. This web app helps
-him to manage a group of hockey players. This application provides this clean and
-simple work flow:
+This is a web application that I created for a friend of mine. This web app helps
+him to manage a group of hockey players. This application provides the
+following clean and simple work flow:
 
 The admin user can create/remove/rename players. Each player has a page
 (corresponds to the "show" action in a REST architecture). When a player
