@@ -81,7 +81,9 @@
     </div>
     <div class="dialog-body">
         <form action="/players/{{.One.Id}}/rate" method="POST" autocomplete="off" accept-charset="utf-8">
-            <label for="rating">Com ha estat el teu entrenament d'avui ?</label>
+            <label for="rating">Si haguéssis de puntuar l'entrenament d'avui
+            del 0 al 10 segons l'esforç que t'ha suposat, com el
+            qualificaries ?</label>
             <input class="text" type="number" id="rating" name="rating" autofocus placeholder="Puntuació (0-10)" />
             <input class="btn yellow-btn" type="submit" value="Enviar" />
             <div class="clearout"></div>
