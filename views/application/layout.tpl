@@ -4,6 +4,8 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <title>Entrenaments</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="196x196" href="/images/icon.png">
     <link href="/css/mobile.css" media="only screen and (max-width: 480px)" rel="stylesheet" type="text/css" />
     <link href="/css/style.css" media="only screen and (min-width: 480px)" rel="stylesheet" type="text/css" />
     {{if .JS}}
