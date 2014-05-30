@@ -147,14 +147,20 @@ func writeCsv(res http.ResponseWriter, name string, players []*ExtPlayer) {
 	w := csv.NewWriter(res)
 	for _, v := range players {
 		min, max := strconv.Itoa(v.Min), strconv.Itoa(v.Max)
-		w.Write([]string{v.Name, min, max, v.Avg})
+		w.Write([]string{v.Name})
+		if v.Avg == "" {
+			w.Write([]string{"No ha puntuat cap entrenament"})
+		} else {
+			w.Write([]string{min, max, v.Avg})
 
-		data := []string{v.Name}
-		for _, r := range v.Ratings {
-			data = append(data, strconv.Itoa(r.Value))
-			data = append(data, fmtDate(r.Created_at))
+			ratings, dates := []string{}, []string{}
+			for _, r := range v.Ratings {
+				ratings = append(ratings, strconv.Itoa(r.Value))
+				dates = append(dates, fmtDate(r.Created_at))
+			}
+			w.Write(ratings)
+			w.Write(dates)
 		}
-		w.Write(data)
 		w.Write([]string{}) // Extra line.
 	}
 	w.Flush()

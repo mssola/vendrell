@@ -104,6 +104,7 @@ func TestRootCsv(t *testing.T) {
 	// Let's create a couple of players and some ratings.
 	createPlayer("one", []int{1, 2, 3})
 	createPlayer("another", []int{0, 3, 8})
+	createPlayer("notrated", []int{})
 
 	// Perform the request.
 	req, err := http.NewRequest("GET", "/", nil)
@@ -118,12 +119,20 @@ func TestRootCsv(t *testing.T) {
 	assert.Equal(t, header["Content-Disposition"][0],
 		"attachment;filename=data.csv")
 
-	dt := fmtDate(time.Now())
-
 	// CSV
+	dt := fmtDate(time.Now())
 	r := csv.NewReader(w.Body)
-	testCSV(t, r, 4, "another", "0", "8", "3.67")
-	testCSV(t, r, 7, "another", "0", dt, "3", dt, "8", dt)
-	testCSV(t, r, 4, "one", "1", "3", "2.00")
-	testCSV(t, r, 7, "one", "1", dt, "2", dt, "3", dt)
+
+	testCSV(t, r, 1, "another")
+	testCSV(t, r, 3, "0", "8", "3.67")
+	testCSV(t, r, 3, "0", "3", "8")
+	testCSV(t, r, 3, dt, dt, dt)
+
+	testCSV(t, r, 1, "notrated")
+	testCSV(t, r, 1, "No ha puntuat cap entrenament")
+
+	testCSV(t, r, 1, "one")
+	testCSV(t, r, 3, "1", "3", "2.00")
+	testCSV(t, r, 3, "1", "2", "3")
+	testCSV(t, r, 3, dt, dt, dt)
 }

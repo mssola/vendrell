@@ -312,10 +312,11 @@ func TestPlayersCsv(t *testing.T) {
 	assert.Equal(t, header["Content-Disposition"][0],
 		"attachment;filename=one.csv")
 
-	dt := fmtDate(time.Now())
-
 	// CSV
 	re := csv.NewReader(w.Body)
-	testCSV(t, re, 4, "one", "1", "3", "2.00")
-	testCSV(t, re, 7, "one", "1", dt, "2", dt, "3", dt)
+	dt := fmtDate(time.Now())
+	testCSV(t, re, 1, "one")
+	testCSV(t, re, 3, "1", "3", "2.00")
+	testCSV(t, re, 3, "1", "2", "3")
+	testCSV(t, re, 3, dt, dt, dt)
 }
