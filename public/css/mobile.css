@@ -92,6 +92,14 @@ input::-moz-focus-inner {
   margin: 20px;
 }
 
+.dialog .dialog-body label {
+    display: inline-block;
+    margin: 10px 0px 0px 10px;
+    text-align: left;
+    width: 90%;
+    font-size: 16px;
+}
+
 .btn {
     position: relative;
     font-weight: bold;

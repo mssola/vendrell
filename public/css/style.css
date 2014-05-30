@@ -246,6 +246,11 @@ header a:hover {
     color: #1F1FE0;
 }
 
+.dialog .dialog-body label {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
 #left {
     width: 60%;
     display: table-cell;
