@@ -1,4 +1,4 @@
-# README [![Build Status](https://travis-ci.org/mssola/vendrell.svg?branch=master)](https://travis-ci.org/mssola/vendrell)
+# Vendrell [![Build Status](https://travis-ci.org/mssola/vendrell.svg?branch=master)](https://travis-ci.org/mssola/vendrell)
 
 This is a web application that I created for a friend of mine. This web app helps
 him to manage a group of hockey players. This application provides the
