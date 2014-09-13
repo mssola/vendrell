@@ -100,6 +100,15 @@ input::-moz-focus-inner {
     font-size: 16px;
 }
 
+.dialog .borg table {
+    border: none;
+    margin: 20px auto;
+}
+
+.dialog .borg .second {
+    text-align: left;
+}
+
 .btn {
     position: relative;
     font-weight: bold;

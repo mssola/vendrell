@@ -91,10 +91,23 @@
     </div>
 
     <div class="borg">
-        <span>Com a referència:</span>
-        <div class="inner-borg">
-            <img src="../../images/borg.png" />
-        </div>
+        <table>
+            <tr>
+                <th colspan="2">Com a referència</th>
+            </tr>
+            <tr><td>0</td><td class="second">Res</td></tr>
+            <tr><td>0.5</td><td class="second">Molt, molt fàcil</td></tr>
+            <tr><td>1</td><td class="second">Molt fàcil</td></tr>
+            <tr><td>2</td><td class="second">Fàcil</td></tr>
+            <tr><td>3</td><td class="second">Moderat</td></tr>
+            <tr><td>4</td><td class="second">Una mica dur</td></tr>
+            <tr><td>5</td><td class="second">Dur</td></tr>
+            <tr><td>6</td><td class="second"></td></tr>
+            <tr><td>7</td><td class="second">Molt dur</td></tr>
+            <tr><td>8</td><td class="second"></td></tr>
+            <tr><td>9</td><td class="second">Molt, molt dur</td></tr>
+            <tr><td>10</td><td class="second">Impossible</td></tr>
+        </table>
     </div>
 </div>
 

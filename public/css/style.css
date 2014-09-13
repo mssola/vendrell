@@ -251,12 +251,13 @@ header a:hover {
     margin-bottom: 10px;
 }
 
-.dialog .borg {
-    padding: 10px;
+.dialog .borg table {
+    border: none;
+    margin: 20px auto;
 }
 
-.dialog .borg .inner-borg {
-    margin-top: 10px;
+.dialog .borg .second {
+    text-align: left;
 }
 
 #left {
