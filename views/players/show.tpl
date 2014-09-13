@@ -89,7 +89,15 @@
             <div class="clearout"></div>
         </form>
     </div>
+
+    <div class="borg">
+        <span>Com a referència:</span>
+        <div class="inner-borg">
+            <img src="../../images/borg.png" />
+        </div>
+    </div>
 </div>
+
 
 {{end}}
 

@@ -251,6 +251,14 @@ header a:hover {
     margin-bottom: 10px;
 }
 
+.dialog .borg {
+    padding: 10px;
+}
+
+.dialog .borg .inner-borg {
+    margin-top: 10px;
+}
+
 #left {
     width: 60%;
     display: table-cell;
