@@ -88,8 +88,8 @@
             <input class="btn yellow-btn" type="submit" value="Enviar" />
             <div class="clearout"></div>
         </form>
-    </diV>
-</diV>
+    </div>
+</div>
 
 {{end}}
 
