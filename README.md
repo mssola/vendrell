@@ -32,5 +32,5 @@ After this, you can install this like any other Go program and run it:
     go install
     vendrell
 
-Copyright &copy; 2014 Miquel Sabaté Solà, released under the MIT License.
+Copyright &copy; 2014-2015 Miquel Sabaté Solà, released under the MIT License.
 
